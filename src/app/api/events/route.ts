@@ -28,6 +28,7 @@ export async function GET() {
         endDate: true,
         location: true,
         published: true,
+        authorId: true,
         author: {
           select: { name: true }
         }

@@ -26,6 +26,7 @@ interface Event {
     description: string
     location: string
     published: boolean
+    authorId: string
 }
 
 export default function EventCalendar() {
@@ -51,6 +52,7 @@ export default function EventCalendar() {
                     description: event.description,
                     location: event.location,
                     published: event.published,
+                    authorId: event.authorId, // Added authorId
                 }))
                 setEvents(formattedEvents)
             } else {
