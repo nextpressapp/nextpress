@@ -23,7 +23,7 @@ export async function POST(req: Request) {
 
   const token = await getToken({ req: req as NextRequest, secret: process.env.NEXTAUTH_SECRET })
 
-  if (!token) {
+  if (!token || typeof token.sessionToken !== 'string') {
     return NextResponse.json({ error: 'Invalid token' }, { status: 401 })
   }
 
