@@ -23,7 +23,8 @@ export async function POST(req: Request) {
 
   const token = await getToken({ req: req as NextRequest, secret: process.env.NEXTAUTH_SECRET })
 
-  if (!token || typeof token.sessionToken !== 'string') {
+  if (!token) {
+    console.error('Token is missing')
     return NextResponse.json({ error: 'Invalid token' }, { status: 401 })
   }
 
@@ -39,10 +40,19 @@ export async function POST(req: Request) {
     impersonatedBy: session.user.id,
   }
 
-  // Update the session in the database
-  await prisma.session.update({
-    where: { sessionToken: token.sessionToken },
-    data: { userId: user.id },
+  // Update the user's sessions to expire them
+  await prisma.session.updateMany({
+    where: { userId: session.user.id },
+    data: { expires: new Date() }
+  })
+
+  // Create a new session for the impersonated user
+  await prisma.session.create({
+    data: {
+      sessionToken: `imp_${Date.now()}`,
+      userId: user.id,
+      expires: new Date(Date.now() + 24 * 60 * 60 * 1000), // 24 hours from now
+    }
   })
 
   return NextResponse.json(impersonatedSession)
