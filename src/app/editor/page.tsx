@@ -1,10 +1,22 @@
 import { PrismaClient } from "@prisma/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { FileText, Calendar } from "lucide-react";
+import Link from "next/link";
+import {Button} from "@react-email/components";
+import EventList from "@/components/EventList";
+import {redirect} from "next/navigation";
+import {getServerSession} from "next-auth/next";
+import {authOptions} from "@/lib/auth";
 
 const prisma = new PrismaClient();
 
 export default async function EditorDashboard() {
+    const session = await getServerSession(authOptions)
+
+    if (!session || (session.user.role !== 'ADMIN' && session.user.role !== 'EDITOR')) {
+        redirect('/')
+    }
+
   const stats = await prisma.$transaction([
     prisma.post.count(),
     prisma.page.count(),

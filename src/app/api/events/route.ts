@@ -5,21 +5,36 @@ import { authOptions } from '@/lib/auth'
 
 const prisma = new PrismaClient()
 
-export async function GET() {
+export async function GET(req: Request) {
   const session = await getServerSession(authOptions)
+  const { searchParams } = new URL(req.url)
+  const authorId = searchParams.get('authorId')
 
   if (!session) {
     return NextResponse.json({ error: 'Not authenticated' }, { status: 401 })
   }
 
   try {
-    const events = await prisma.event.findMany({
-      where: {
+    let whereClause: any = { published: true }
+
+    if (authorId) {
+      whereClause = {
+        OR: [
+          { published: true },
+          { authorId: authorId }
+        ]
+      }
+    } else if (session.user.role !== 'ADMIN') {
+      whereClause = {
         OR: [
           { published: true },
           { authorId: session.user.id }
         ]
-      },
+      }
+    }
+
+    const events = await prisma.event.findMany({
+      where: whereClause,
       select: {
         id: true,
         title: true,
@@ -28,7 +43,6 @@ export async function GET() {
         endDate: true,
         location: true,
         published: true,
-        authorId: true,
         author: {
           select: { name: true }
         }
@@ -54,20 +68,19 @@ export async function POST(req: Request) {
 
   const { title, description, startDate, endDate, location, published } = await req.json()
 
-  // Validate required fields
-  if (!title || !description || !startDate || !endDate) {
-    return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
-  }
+  // Ensure startDate and endDate are valid ISO-8601 strings
+  const validStartDate = new Date(startDate).toISOString()
+  const validEndDate = new Date(endDate).toISOString()
 
   try {
     const event = await prisma.event.create({
       data: {
         title,
         description,
-        startDate: new Date(startDate),
-        endDate: new Date(endDate),
+        startDate: validStartDate,
+        endDate: validEndDate,
         location,
-        published: published ?? false,
+        published,
         authorId: session.user.id
       }
     })

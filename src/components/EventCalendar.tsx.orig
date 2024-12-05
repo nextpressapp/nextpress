@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import {Calendar, momentLocalizer, Views} from 'react-big-calendar'
 import moment from 'moment'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
-import { EventDetailsModal } from './EventDetailsModal'
+import {EventDetailsModal} from "@/components/EventDetailsModal";
 
 // Setup the localizer for react-big-calendar
 const localizer = momentLocalizer(moment)
@@ -12,18 +12,17 @@ const localizer = momentLocalizer(moment)
 interface Event {
     id: string
     title: string
-    description: string
     start: Date
     end: Date
-    location?: string
     allDay?: boolean
 }
 
 export default function EventCalendar() {
     const [events, setEvents] = useState<Event[]>([])
+    const [view, setView] = useState(Views.MONTH);
+    const [date, setDate] = useState(new Date());
     const [selectedEvent, setSelectedEvent] = useState<Event | null>(null)
     const [isModalOpen, setIsModalOpen] = useState(false)
-    const [date, setDate] = useState(new Date());
 
     useEffect(() => {
         const fetchEvents = async () => {
@@ -34,11 +33,9 @@ export default function EventCalendar() {
                     const formattedEvents = data.map((event: any) => ({
                         id: event.id,
                         title: event.title,
-                        description: event.description,
                         start: new Date(event.startDate),
                         end: new Date(event.endDate),
-                        location: event.location,
-                        allDay: false,
+                        allDay: false, // You can adjust this based on your event data
                     }))
                     setEvents(formattedEvents)
                 } else {
@@ -67,8 +64,11 @@ export default function EventCalendar() {
             <Calendar
                 localizer={localizer}
                 events={events}
-                views={[Views.MONTH]}
+                views={[Views.MONTH, Views.WEEK, Views.DAY]}
+                defaultView={view}
+                view={view}
                 date={date}
+                onView={(view) => setView(view)}
                 onNavigate={(date) => {
                     setDate(new Date(date));
                 }}

@@ -9,21 +9,39 @@ import { Switch } from '@/components/ui/switch'
 import { useToast } from '@/hooks/use-toast'
 import MDEditor from '@uiw/react-md-editor'
 
-export default function EventForm() {
-    const [title, setTitle] = useState('')
-    const [description, setDescription] = useState('')
-    const [startDate, setStartDate] = useState('')
-    const [endDate, setEndDate] = useState('')
-    const [location, setLocation] = useState('')
-    const [published, setPublished] = useState(false)
+interface EditEventFormProps {
+    event: {
+        id: string
+        title: string
+        description: string
+        startDate: string
+        endDate: string
+        location?: string
+        published: boolean
+        authorId: string
+    }
+}
+
+export default function EditEventForm({ event }: EditEventFormProps) {
+    const [title, setTitle] = useState(event.title)
+    const [description, setDescription] = useState(event.description)
+    const [startDate, setStartDate] = useState(formatDateForInput(event.startDate))
+    const [endDate, setEndDate] = useState(formatDateForInput(event.endDate))
+    const [location, setLocation] = useState(event.location || '')
+    const [published, setPublished] = useState(event.published)
     const router = useRouter()
     const { toast } = useToast()
+
+    function formatDateForInput(dateString: string): string {
+        const date = new Date(dateString)
+        return date.toISOString().slice(0, 16)
+    }
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
         try {
-            const response = await fetch('/api/events', {
-                method: 'POST',
+            const response = await fetch(`/api/events/${event.id}`, {
+                method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     title,
@@ -32,25 +50,26 @@ export default function EventForm() {
                     endDate: new Date(endDate).toISOString(),
                     location,
                     published,
+                    authorId: event.authorId,
                 }),
             })
 
             if (response.ok) {
                 toast({
-                    title: 'Event created',
-                    description: 'Your event has been created successfully.',
+                    title: 'Event updated',
+                    description: 'Your event has been updated successfully.',
                 })
-                router.push('/events')
+                router.push('/admin/events')
             } else {
                 const data = await response.json()
                 toast({
                     title: 'Error',
-                    description: data.error || 'Failed to create event',
+                    description: data.error || 'Failed to update event',
                     variant: 'destructive',
                 })
             }
         } catch (error) {
-            console.error('Error creating event:', error)
+            console.error('Error updating event:', error)
             toast({
                 title: 'Error',
                 description: 'An unexpected error occurred',
@@ -113,7 +132,7 @@ export default function EventForm() {
                 />
                 <Label htmlFor="published">Published</Label>
             </div>
-            <Button type="submit">Create Event</Button>
+            <Button type="submit">Update Event</Button>
         </form>
     )
 }

@@ -23,16 +23,19 @@ interface Event {
     startDate: string
     endDate: string
     published: boolean
+    author: {
+        name: string
+    }
 }
 
-export default function EventList({ authorId }: { authorId: string }) {
+export default function AdminEventList() {
     const [events, setEvents] = useState<Event[]>([])
     const { toast } = useToast()
 
     useEffect(() => {
         const fetchEvents = async () => {
             try {
-                const response = await fetch(`/api/events?authorId=${authorId}`)
+                const response = await fetch('/api/admin/events')
                 if (response.ok) {
                     const data = await response.json()
                     setEvents(data)
@@ -45,7 +48,7 @@ export default function EventList({ authorId }: { authorId: string }) {
         }
 
         fetchEvents()
-    }, [authorId])
+    }, [])
 
     const handleDelete = async (id: string) => {
         try {
@@ -81,6 +84,7 @@ export default function EventList({ authorId }: { authorId: string }) {
             <TableHeader>
                 <TableRow>
                     <TableHead>Title</TableHead>
+                    <TableHead>Author</TableHead>
                     <TableHead>Start Date</TableHead>
                     <TableHead>End Date</TableHead>
                     <TableHead>Status</TableHead>
@@ -91,12 +95,13 @@ export default function EventList({ authorId }: { authorId: string }) {
                 {events.map((event) => (
                     <TableRow key={event.id}>
                         <TableCell>{event.title}</TableCell>
+                        <TableCell>{event.author.name}</TableCell>
                         <TableCell>{new Date(event.startDate).toLocaleString()}</TableCell>
                         <TableCell>{new Date(event.endDate).toLocaleString()}</TableCell>
                         <TableCell>{event.published ? 'Published' : 'Draft'}</TableCell>
                         <TableCell>
                             <div className="flex space-x-2">
-                                <Link href={`/events/edit/${event.id}`}>
+                                <Link href={`/admin/events/edit/${event.id}`}>
                                     <Button variant="outline">Edit</Button>
                                 </Link>
                                 <AlertDialog>

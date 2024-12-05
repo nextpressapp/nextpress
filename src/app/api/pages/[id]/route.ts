@@ -25,7 +25,7 @@ export async function PUT(
     return NextResponse.json({ error: "Page not found" }, { status: 404 });
   }
 
-  if (page.authorId !== session.user.id && session.user.role !== "ADMIN") {
+  if (page.authorId !== session.user.id && session.user.role !== "ADMIN" && session.user.role !== "EDITOR") {
     return NextResponse.json(
       { error: "Not authorized to edit this page" },
       { status: 403 },

@@ -5,7 +5,10 @@ import { authOptions } from '@/lib/auth'
 
 const prisma = new PrismaClient()
 
-export async function DELETE({ params }: { params: { id: string } }) {
+export async function DELETE(
+    req: Request,
+    { params }: { params: { id: string } }
+) {
     const session = await getServerSession(authOptions)
 
     if (!session || !['ADMIN', 'EDITOR'].includes(session.user.role)) {
@@ -39,7 +42,10 @@ export async function DELETE({ params }: { params: { id: string } }) {
     }
 }
 
-export async function PUT(req: Request, { params }: { params: { id: string } }) {
+export async function PUT(
+    req: Request,
+    { params }: { params: { id: string } }
+) {
     const session = await getServerSession(authOptions)
 
     if (!session || !['ADMIN', 'EDITOR'].includes(session.user.role)) {
