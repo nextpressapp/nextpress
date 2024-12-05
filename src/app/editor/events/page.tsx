@@ -3,7 +3,6 @@ import { redirect } from 'next/navigation'
 import { authOptions } from '@/lib/auth'
 import { PrismaClient } from '@prisma/client'
 import EventList from '@/components/EventList'
-import CreateEventForm from '@/components/CreateEventForm'
 
 const prisma = new PrismaClient()
 
@@ -20,14 +19,20 @@ export default async function EditorEventsPage() {
         },
         orderBy: {
             startDate: 'asc'
+        },
+        select: {
+            id: true,
+            title: true,
+            startDate: true,
+            endDate: true,
+            published: true
         }
     })
 
     return (
         <div>
             <h2 className="text-2xl font-bold mb-4">Manage Events</h2>
-            <EventList initialEvents={events} />
-            <CreateEventForm />
+            <EventList authorId={session.user.id} initialEvents={events} />
         </div>
     )
 }

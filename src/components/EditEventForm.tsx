@@ -14,9 +14,9 @@ interface EditEventFormProps {
         id: string
         title: string
         description: string
-        startDate: string
-        endDate: string
-        location?: string
+        startDate: Date
+        endDate: Date
+        location: string | null
         published: boolean
         authorId: string
     }
@@ -27,13 +27,12 @@ export default function EditEventForm({ event }: EditEventFormProps) {
     const [description, setDescription] = useState(event.description)
     const [startDate, setStartDate] = useState(formatDateForInput(event.startDate))
     const [endDate, setEndDate] = useState(formatDateForInput(event.endDate))
-    const [location, setLocation] = useState(event.location || '')
+    const [location, setLocation] = useState(event.location ?? '')
     const [published, setPublished] = useState(event.published)
     const router = useRouter()
     const { toast } = useToast()
 
-    function formatDateForInput(dateString: string): string {
-        const date = new Date(dateString)
+    function formatDateForInput(date: Date): string {
         return date.toISOString().slice(0, 16)
     }
 

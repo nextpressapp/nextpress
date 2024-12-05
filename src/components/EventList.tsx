@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { useToast } from '@/hooks/use-toast'
@@ -20,32 +21,44 @@ import {
 interface Event {
     id: string
     title: string
-    startDate: string
-    endDate: string
+    startDate: Date
+    endDate: Date
     published: boolean
 }
 
-export default function EventList({ authorId }: { authorId: string }) {
-    const [events, setEvents] = useState<Event[]>([])
+interface EventListProps {
+    authorId: string
+    initialEvents: Event[]
+}
+
+export default function EventList({ authorId, initialEvents }: EventListProps) {
+    const [events, setEvents] = useState<Event[]>(initialEvents)
+    const router = useRouter()
     const { toast } = useToast()
 
     useEffect(() => {
-        const fetchEvents = async () => {
-            try {
-                const response = await fetch(`/api/events?authorId=${authorId}`)
-                if (response.ok) {
-                    const data = await response.json()
-                    setEvents(data)
-                } else {
-                    console.error('Failed to fetch events')
+        if (initialEvents.length === 0) {
+            const fetchEvents = async () => {
+                try {
+                    const response = await fetch(`/api/events?authorId=${authorId}`)
+                    if (response.ok) {
+                        const data = await response.json()
+                        setEvents(data.map((event: any) => ({
+                            ...event,
+                            startDate: new Date(event.startDate),
+                            endDate: new Date(event.endDate)
+                        })))
+                    } else {
+                        console.error('Failed to fetch events')
+                    }
+                } catch (error) {
+                    console.error('Error fetching events:', error)
                 }
-            } catch (error) {
-                console.error('Error fetching events:', error)
             }
-        }
 
-        fetchEvents()
-    }, [authorId])
+            fetchEvents()
+        }
+    }, [authorId, initialEvents])
 
     const handleDelete = async (id: string) => {
         try {
@@ -91,8 +104,8 @@ export default function EventList({ authorId }: { authorId: string }) {
                 {events.map((event) => (
                     <TableRow key={event.id}>
                         <TableCell>{event.title}</TableCell>
-                        <TableCell>{new Date(event.startDate).toLocaleString()}</TableCell>
-                        <TableCell>{new Date(event.endDate).toLocaleString()}</TableCell>
+                        <TableCell>{event.startDate.toLocaleString()}</TableCell>
+                        <TableCell>{event.endDate.toLocaleString()}</TableCell>
                         <TableCell>{event.published ? 'Published' : 'Draft'}</TableCell>
                         <TableCell>
                             <div className="flex space-x-2">
