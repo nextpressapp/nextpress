@@ -1,6 +1,7 @@
 import { getServerSession } from "next-auth/next";
 import { redirect } from "next/navigation";
-import { authOptions } from "@/lib/auth";import PostForm from "@/components/PostForm";
+import { authOptions } from "@/lib/auth";
+import PostForm from "@/components/PostForm";
 
 export default async function CreatePostPage() {
   const session = await getServerSession(authOptions);

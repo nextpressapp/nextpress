@@ -1,6 +1,7 @@
 import { getServerSession } from "next-auth/next";
 import { redirect } from "next/navigation";
-import { authOptions } from "@/lib/auth";import { PrismaClient } from "@prisma/client";
+import { authOptions } from "@/lib/auth";
+import { PrismaClient } from "@prisma/client";
 import PageForm from "@/components/PageForm";
 
 const prisma = new PrismaClient();

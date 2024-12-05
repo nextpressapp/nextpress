@@ -1,6 +1,7 @@
 import { getServerSession } from "next-auth/next";
 import { redirect } from "next/navigation";
-import { authOptions } from "@/lib/auth";import { PrismaClient } from "@prisma/client";
+import { authOptions } from "@/lib/auth";
+import { PrismaClient } from "@prisma/client";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 

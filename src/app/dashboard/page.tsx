@@ -1,6 +1,7 @@
 import { getServerSession } from "next-auth/next";
 import { redirect } from "next/navigation";
-import { authOptions } from "@/lib/auth";import ProfileForm from "@/components/ProfileForm";
+import { authOptions } from "@/lib/auth";
+import ProfileForm from "@/components/ProfileForm";
 import ChangePasswordForm from "@/components/ChangePasswordForm";
 import DeleteAccountForm from "@/components/DeleteAccountForm";
 

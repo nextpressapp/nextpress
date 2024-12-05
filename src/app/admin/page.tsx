@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { BarChart, Users, FileText, Calendar } from "lucide-react";
+import { Users, FileText, Calendar } from "lucide-react";
 
 const prisma = new PrismaClient();
 

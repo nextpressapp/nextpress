@@ -1,6 +1,7 @@
 import { getServerSession } from "next-auth/next";
 import { redirect } from "next/navigation";
-import { authOptions } from "@/lib/auth";import PageForm from "@/components/PageForm";
+import { authOptions } from "@/lib/auth";
+import PageForm from "@/components/PageForm";
 
 export default async function CreatePagePage() {
   const session = await getServerSession(authOptions);
