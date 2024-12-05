@@ -53,15 +53,20 @@ export async function POST(req: Request) {
 
   const { title, description, startDate, endDate, location, published } = await req.json()
 
+  // Validate required fields
+  if (!title || !description || !startDate || !endDate) {
+    return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
+  }
+
   try {
     const event = await prisma.event.create({
       data: {
         title,
         description,
-        startDate,
-        endDate,
+        startDate: new Date(startDate),
+        endDate: new Date(endDate),
         location,
-        published,
+        published: published ?? false,
         authorId: session.user.id
       }
     })
