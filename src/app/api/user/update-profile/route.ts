@@ -1,28 +1,33 @@
-import { NextResponse } from 'next/server'
-import { getServerSession } from 'next-auth/next'
-import { PrismaClient } from '@prisma/client'
-import { authOptions } from '@/app/api/auth/[...nextauth]/route'
+import { NextResponse } from "next/server";
+import { getServerSession } from "next-auth/next";
+import { PrismaClient } from "@prisma/client";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
-const prisma = new PrismaClient()
+const prisma = new PrismaClient();
 
 export async function POST(req: Request) {
-    const session = await getServerSession(authOptions)
+  const session = await getServerSession(authOptions);
 
-    if (!session) {
-        return NextResponse.json({ error: 'Not authenticated' }, { status: 401 })
-    }
+  if (!session) {
+    return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
+  }
 
-    const { name, email } = await req.json()
+  const { name, email } = await req.json();
 
-    try {
-        const updatedUser = await prisma.user.update({
-            where: { id: session.user.id },
-            data: { name, email },
-        })
+  try {
+    const updatedUser = await prisma.user.update({
+      where: { id: session.user.id },
+      data: { name, email },
+    });
 
-        return NextResponse.json({ message: 'Profile updated successfully', user: updatedUser })
-    } catch (error) {
-        return NextResponse.json({ error: 'Failed to update profile' }, { status: 500 })
-    }
+    return NextResponse.json({
+      message: "Profile updated successfully",
+      user: updatedUser,
+    });
+  } catch (error) {
+    return NextResponse.json(
+      { error: "Failed to update profile" },
+      { status: 500 },
+    );
+  }
 }
-

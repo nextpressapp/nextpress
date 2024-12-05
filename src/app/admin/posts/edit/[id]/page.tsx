@@ -1,0 +1,34 @@
+import { getServerSession } from "next-auth/next";
+import { redirect } from "next/navigation";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { PrismaClient } from "@prisma/client";
+import PostForm from "@/components/PostForm";
+
+const prisma = new PrismaClient();
+
+export default async function EditPostPage({
+  params,
+}: {
+  params: { id: string };
+}) {
+  const session = await getServerSession(authOptions);
+
+  if (!session || session.user.role !== "ADMIN") {
+    redirect("/");
+  }
+
+  const post = await prisma.post.findUnique({
+    where: { id: params.id },
+  });
+
+  if (!post) {
+    redirect("/admin/posts");
+  }
+
+  return (
+    <div>
+      <h2 className="text-2xl font-bold mb-4">Edit Post</h2>
+      <PostForm post={post} />
+    </div>
+  );
+}
