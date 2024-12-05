@@ -15,23 +15,13 @@ import {
 import EventForm from './EventForm'
 import { useToast } from "@/hooks/use-toast"
 import { useSession } from 'next-auth/react'
+import { Event, CalendarEvent } from '@/types/event'
 
 const localizer = momentLocalizer(moment)
 
-interface Event {
-    id: string
-    title: string
-    start: Date
-    end: Date
-    description: string
-    location: string
-    published: boolean
-    authorId: string
-}
-
 export default function EventCalendar() {
-    const [events, setEvents] = useState<Event[]>([])
-    const [selectedEvent, setSelectedEvent] = useState<Event | null>(null)
+    const [events, setEvents] = useState<CalendarEvent[]>([])
+    const [selectedEvent, setSelectedEvent] = useState<CalendarEvent | null>(null)
     const { toast } = useToast()
     const { data: session } = useSession()
 
@@ -43,16 +33,11 @@ export default function EventCalendar() {
         try {
             const response = await fetch('/api/events')
             if (response.ok) {
-                const data = await response.json()
-                const formattedEvents = data.map((event: any) => ({
-                    id: event.id,
-                    title: event.title,
+                const data: Event[] = await response.json()
+                const formattedEvents: CalendarEvent[] = data.map((event) => ({
+                    ...event,
                     start: new Date(event.startDate),
                     end: new Date(event.endDate),
-                    description: event.description,
-                    location: event.location,
-                    published: event.published,
-                    authorId: event.authorId, // Added authorId
                 }))
                 setEvents(formattedEvents)
             } else {
@@ -63,7 +48,7 @@ export default function EventCalendar() {
         }
     }
 
-    const handleSelectEvent = (event: Event) => {
+    const handleSelectEvent = (event: CalendarEvent) => {
         setSelectedEvent(event)
     }
 
@@ -76,7 +61,12 @@ export default function EventCalendar() {
             })
 
             if (response.ok) {
-                setEvents(events.map(event => event.id === updatedEvent.id ? updatedEvent : event))
+                const updatedCalendarEvent: CalendarEvent = {
+                    ...updatedEvent,
+                    start: new Date(updatedEvent.startDate),
+                    end: new Date(updatedEvent.endDate),
+                }
+                setEvents(events.map(event => event.id === updatedEvent.id ? updatedCalendarEvent : event))
                 setSelectedEvent(null)
                 toast({ title: "Event updated successfully" })
             } else {
@@ -85,6 +75,32 @@ export default function EventCalendar() {
         } catch (error) {
             console.error('Error updating event:', error)
             toast({ title: "Error updating event", variant: "destructive" })
+        }
+    }
+
+    const handleEventCreate = async (newEvent: Event) => {
+        try {
+            const response = await fetch('/api/events', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(newEvent),
+            })
+
+            if (response.ok) {
+                const createdEvent: Event = await response.json()
+                const newCalendarEvent: CalendarEvent = {
+                    ...createdEvent,
+                    start: new Date(createdEvent.startDate),
+                    end: new Date(createdEvent.endDate),
+                }
+                setEvents([...events, newCalendarEvent])
+                toast({ title: "Event created successfully" })
+            } else {
+                toast({ title: "Failed to create event", variant: "destructive" })
+            }
+        } catch (error) {
+            console.error('Error creating event:', error)
+            toast({ title: "Error creating event", variant: "destructive" })
         }
     }
 
@@ -109,12 +125,24 @@ export default function EventCalendar() {
         }
     }
 
-    const canEditEvent = (event: Event) => {
+    const canEditEvent = (event: CalendarEvent) => {
         return session?.user.role === 'ADMIN' || session?.user.role === 'EDITOR' || event.authorId === session?.user.id
     }
 
     return (
         <div style={{ height: '500px' }}>
+            <Dialog>
+                <DialogTrigger asChild>
+                    <Button className="mb-4">Create New Event</Button>
+                </DialogTrigger>
+                <DialogContent>
+                    <DialogHeader>
+                        <DialogTitle>Create New Event</DialogTitle>
+                    </DialogHeader>
+                    <EventForm onSubmit={handleEventCreate} />
+                </DialogContent>
+            </Dialog>
+
             <Calendar
                 localizer={localizer}
                 events={events}
@@ -130,14 +158,14 @@ export default function EventCalendar() {
                             <DialogTitle>{selectedEvent.title}</DialogTitle>
                         </DialogHeader>
                         <div>
-                            <p><strong>Start:</strong> {moment(selectedEvent.start).format('MMMM D, YYYY h:mm A')}</p>
-                            <p><strong>End:</strong> {moment(selectedEvent.end).format('MMMM D, YYYY h:mm A')}</p>
+                            <p><strong>Start:</strong> {moment(selectedEvent.startDate).format('MMMM D, YYYY h:mm A')}</p>
+                            <p><strong>End:</strong> {moment(selectedEvent.endDate).format('MMMM D, YYYY h:mm A')}</p>
                             <p><strong>Location:</strong> {selectedEvent.location}</p>
                             <p><strong>Description:</strong> {selectedEvent.description}</p>
                         </div>
                         {canEditEvent(selectedEvent) && (
                             <div className="flex justify-end space-x-2 mt-4">
-                                <Button onClick={() => handleEventDelete(selectedEvent.id)} variant="destructive">Delete</Button>
+                                <Button onClick={() => handleEventDelete(selectedEvent.id!)} variant="destructive">Delete</Button>
                                 <Dialog>
                                     <DialogTrigger asChild>
                                         <Button>Edit</Button>

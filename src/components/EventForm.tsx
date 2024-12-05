@@ -6,17 +6,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { Switch } from '@/components/ui/switch'
-
-interface Event {
-    id?: string
-    title: string
-    description: string
-    startDate: string
-    endDate: string
-    location: string
-    published: boolean
-    authorId?: string
-}
+import { Event } from '@/types/event'
 
 interface EventFormProps {
     event?: Event
@@ -30,16 +20,15 @@ export default function EventForm({ event, onSubmit }: EventFormProps) {
     const [endDate, setEndDate] = useState(event?.endDate || '')
     const [location, setLocation] = useState(event?.location || '')
     const [published, setPublished] = useState(event?.published || false)
-    //const router = useRouter() //removed
 
-    const handleSubmit = async (e: React.FormEvent) => {
+    const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
-        const eventData = {
+        const eventData: Event = {
             id: event?.id,
             title,
             description,
-            startDate: new Date(startDate).toISOString(),
-            endDate: new Date(endDate).toISOString(),
+            startDate,
+            endDate,
             location,
             published,
             authorId: event?.authorId
