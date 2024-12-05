@@ -3,7 +3,7 @@ import { ReactNode } from "react";
 import { Inter } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
 import Header from "@/components/Header";
-import { store } from "next/dist/build/output/store";
+import { Analytics } from "@vercel/analytics/react"
 import { Providers } from "@/components/Providers";
 import { Footer } from "@/components/Footer";
 
@@ -30,6 +30,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             <Footer />
           </ThemeProvider>
         </Providers>
+        <Analytics />
       </body>
     </html>
   );
