@@ -1,61 +1,26 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { toast } from '@/hooks/use-toast'
+import { useToast } from '@/hooks/use-toast'
 
 export function ResetPasswordForm() {
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
-    const [isValidToken, setIsValidToken] = useState(false)
     const router = useRouter()
     const searchParams = useSearchParams()
+    const { toast } = useToast()
     const token = searchParams.get('token')
-
-    useEffect(() => {
-        const verifyToken = async () => {
-            if (!token) {
-                toast({
-                    title: "Invalid token",
-                    description: "The reset password link is invalid or has expired.",
-                    variant: "destructive",
-                })
-                return
-            }
-
-            try {
-                const response = await fetch(`/api/auth/verify-reset-token?token=${token}`)
-                if (response.ok) {
-                    setIsValidToken(true)
-                } else {
-                    toast({
-                        title: "Invalid token",
-                        description: "The reset password link is invalid or has expired.",
-                        variant: "destructive",
-                    })
-                }
-            } catch (error) {
-                console.error('Token verification error:', error)
-                toast({
-                    title: "Error",
-                    description: "An error occurred while verifying the token.",
-                    variant: "destructive",
-                })
-            }
-        }
-
-        verifyToken()
-    }, [token])
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
         if (password !== confirmPassword) {
             toast({
-                title: "Passwords do not match",
-                description: "Please ensure both passwords are the same.",
+                title: "Error",
+                description: "Passwords do not match.",
                 variant: "destructive",
             })
             return
@@ -92,15 +57,6 @@ export function ResetPasswordForm() {
         }
     }
 
-    if (!isValidToken) {
-        return (
-            <div>
-                <h2 className="text-2xl font-bold mb-4">Invalid Reset Link</h2>
-                <p>The password reset link is invalid or has expired.</p>
-            </div>
-        )
-    }
-
     return (
         <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
@@ -127,4 +83,3 @@ export function ResetPasswordForm() {
         </form>
     )
 }
-
