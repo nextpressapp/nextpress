@@ -82,7 +82,9 @@ export default function Header() {
           </Link>
           <nav className="flex items-center space-x-4">
             {menu && menu.items.map(renderMenuItem)}
+            {/*
             <Link href="/events" className="px-3 py-2 text-sm font-medium">Events</Link>
+            */}
             <ThemeSwitcher />
             {status === 'authenticated' && session?.user ? (
                 <>

@@ -78,32 +78,6 @@ export default function EventCalendar() {
         }
     }
 
-    const handleEventCreate = async (newEvent: Event) => {
-        try {
-            const response = await fetch('/api/events', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(newEvent),
-            })
-
-            if (response.ok) {
-                const createdEvent: Event = await response.json()
-                const newCalendarEvent: CalendarEvent = {
-                    ...createdEvent,
-                    start: new Date(createdEvent.startDate),
-                    end: new Date(createdEvent.endDate),
-                }
-                setEvents([...events, newCalendarEvent])
-                toast({ title: "Event created successfully" })
-            } else {
-                toast({ title: "Failed to create event", variant: "destructive" })
-            }
-        } catch (error) {
-            console.error('Error creating event:', error)
-            toast({ title: "Error creating event", variant: "destructive" })
-        }
-    }
-
     const handleEventDelete = async (eventId: string) => {
         if (confirm('Are you sure you want to delete this event?')) {
             try {
@@ -131,18 +105,6 @@ export default function EventCalendar() {
 
     return (
         <div style={{ height: '500px' }}>
-            <Dialog>
-                <DialogTrigger asChild>
-                    <Button className="mb-4">Create New Event</Button>
-                </DialogTrigger>
-                <DialogContent>
-                    <DialogHeader>
-                        <DialogTitle>Create New Event</DialogTitle>
-                    </DialogHeader>
-                    <EventForm onSubmit={handleEventCreate} />
-                </DialogContent>
-            </Dialog>
-
             <Calendar
                 localizer={localizer}
                 events={events}
