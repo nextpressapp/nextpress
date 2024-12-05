@@ -1,7 +1,6 @@
 import { getServerSession } from "next-auth/next";
 import { redirect } from "next/navigation";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { PrismaClient } from "@prisma/client";
+import { authOptions } from "@/lib/auth";import { PrismaClient } from "@prisma/client";
 import PostForm from "@/components/PostForm";
 
 const prisma = new PrismaClient();

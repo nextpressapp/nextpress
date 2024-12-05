@@ -1,7 +1,6 @@
 import { getServerSession } from "next-auth/next";
 import { redirect } from "next/navigation";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { DashboardSidebar } from "@/components/DashboardSidebar";
+import { authOptions } from "@/lib/auth";import { DashboardSidebar } from "@/components/DashboardSidebar";
 import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
 
 export default async function EditorLayout({

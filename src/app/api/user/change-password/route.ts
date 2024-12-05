@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth/next";
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/lib/auth";
 
 const prisma = new PrismaClient();
 
@@ -46,7 +46,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ message: "Password changed successfully" });
   } catch (error) {
     return NextResponse.json(
-      { error: "Failed to change password" },
+      { error: `Failed to change password: ${error}` },
       { status: 500 },
     );
   }
