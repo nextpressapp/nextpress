@@ -31,7 +31,7 @@ export default async function AdminSettings() {
             </form>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="mb-8">
           <CardHeader>
             <CardTitle>Menu Management</CardTitle>
           </CardHeader>
