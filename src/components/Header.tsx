@@ -7,7 +7,6 @@ import { Button } from '@/components/ui/button'
 
 export default function Header() {
     const { data: session, status } = useSession()
-
     return (
         <header className="py-4 border-b">
             <div className="container flex justify-between items-center">
@@ -18,8 +17,18 @@ export default function Header() {
                     <Link href="/about">About</Link>
                     <Link href="/blog">Blog</Link>
                     <ThemeSwitcher />
-                    {status === 'authenticated' ? (
+                    {status === 'authenticated' && session?.user ? (
                         <>
+                            {session.user.role === 'ADMIN' && (
+                                <Link href="/admin">
+                                    <Button variant="outline">Admin Dashboard</Button>
+                                </Link>
+                            )}
+                            {(session.user.role === 'ADMIN' || session.user.role === 'EDITOR') && (
+                                <Link href="/editor">
+                                    <Button variant="outline">Editor Dashboard</Button>
+                                </Link>
+                            )}
                             <Link href="/dashboard">Dashboard</Link>
                             <Button variant="outline" onClick={() => signOut()}>Sign out</Button>
                         </>

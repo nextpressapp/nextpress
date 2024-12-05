@@ -17,11 +17,14 @@ model User {
   emailVerified DateTime?
   password      String
   image         String?
+  role          Role      @default(USER)
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
   accounts      Account[]
   sessions      Session[]
   posts         Post[]
+  pages         Page[]
+  events        Event[]
 }
 
 model Account {
@@ -62,11 +65,43 @@ model VerificationToken {
 model Post {
   id        String   @id @default(cuid())
   title     String
-  content   String
+  content   String   @db.Text
   published Boolean  @default(false)
   authorId  String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   author    User     @relation(fields: [authorId], references: [id])
+}
+
+model Page {
+  id        String   @id @default(cuid())
+  title     String
+  content   String   @db.Text
+  slug      String   @unique
+  published Boolean  @default(false)
+  authorId  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  author    User     @relation(fields: [authorId], references: [id])
+}
+
+model Event {
+  id          String   @id @default(cuid())
+  title       String
+  description String   @db.Text
+  startDate   DateTime
+  endDate     DateTime
+  location    String?
+  published   Boolean  @default(false)
+  authorId    String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  author      User     @relation(fields: [authorId], references: [id])
+}
+
+enum Role {
+  USER
+  EDITOR
+  ADMIN
 }
 
