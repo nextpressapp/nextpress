@@ -19,7 +19,7 @@ export const BaseEmailTemplate: React.FC<BaseEmailTemplateProps> = ({
   previewText,
   heading,
   body,
-  footerText = "© 2023 NextPress. All rights reserved.",
+  footerText = "© 2024 NextPress. All rights reserved.",
 }) => (
   <Html>
     <Head />
