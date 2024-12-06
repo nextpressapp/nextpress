@@ -28,7 +28,21 @@ export function Header() {
           </Link>
           <ThemeSwitcher />
           {status === "authenticated" && session?.user ? (
-            <></>
+            <>
+              <Link href="/dashboard">
+                <Button variant="outline" className="rounded">
+                  Dashboard
+                </Button>
+              </Link>
+              <Link
+                href="/auth/signout"
+                className="px-3 py-2 text-sm font-medium"
+              >
+                <Button variant="outline" className="rounded">
+                  Sign Out
+                </Button>
+              </Link>
+            </>
           ) : (
             <>
               <Link href="/auth/login">

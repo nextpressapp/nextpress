@@ -10,13 +10,25 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import {ChevronUp, Home, LifeBuoy, LogOut, User2, UserPen} from "lucide-react";
+import {
+  BadgeHelp,
+  Book,
+  ChevronUp,
+  Home,
+  LifeBuoy,
+  LogOut,
+  Shield,
+  User2,
+  UserPen,
+} from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/lib/auth";
 
 const items = [
   {
@@ -25,12 +37,14 @@ const items = [
     icon: Home,
   },
   {
-    title: "Support",
-    url: "/dashboard/support",
-    icon: LifeBuoy
-  }
+    title: "Tickets",
+    url: "/dashboard/tickets",
+    icon: LifeBuoy,
+  },
 ];
-export function AppSidebar() {
+export async function AppSidebar() {
+  const session = await getServerSession(authOptions);
+
   return (
     <Sidebar>
       <SidebarHeader />
@@ -62,7 +76,7 @@ export function AppSidebar() {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <SidebarMenuButton>
-                  <User2 /> Username
+                  <User2 /> {session?.user.name}
                   <ChevronUp className="ml-auto" />
                 </SidebarMenuButton>
               </DropdownMenuTrigger>
@@ -70,14 +84,45 @@ export function AppSidebar() {
                 side="top"
                 className="w-[--radix-popper-anchor-width]"
               >
-                <DropdownMenuItem asChild>
-                    <a href="/user/profile">
-                      <UserPen />Profile
+
+                {(session!.user.role === "EDITOR" ||
+                  session!.user.role === "ADMIN") && (
+                  <DropdownMenuItem asChild>
+                    <a href="/editor">
+                      <Book />
+                      Editor Dashboard
                     </a>
+                  </DropdownMenuItem>
+                )}
+
+                {(session!.user.role === "SUPPORT" ||
+                  session!.user.role === "ADMIN") && (
+                  <DropdownMenuItem asChild>
+                    <a href="/support">
+                      <BadgeHelp />
+                      Support Dashboard
+                    </a>
+                  </DropdownMenuItem>
+                )}
+
+                {session!.user.role === "ADMIN" && (
+                  <DropdownMenuItem asChild>
+                    <a href="/admin">
+                      <Shield />
+                      Admin Dashboard
+                    </a>
+                  </DropdownMenuItem>
+                )}
+
+                <DropdownMenuItem asChild>
+                  <a href="/dashboard/profile">
+                    <UserPen />
+                    Profile
+                  </a>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
-                  <a href="/logout">
-                    <LogOut/>
+                  <a href="/auth/signout">
+                    <LogOut />
                     <span>Sign out</span>
                   </a>
                 </DropdownMenuItem>
