@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "postinstall": "prisma generate",
-    "vercel-build": "npm i -g node-gyp"
+    "preinstall": "npm i -g node-gyp"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",
