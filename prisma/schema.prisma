@@ -114,6 +114,7 @@ enum Role {
   USER
   EDITOR
   SUPPORT
+  MANAGER
   ADMIN
 }
 

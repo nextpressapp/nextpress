@@ -59,9 +59,12 @@ const adminItems = [
     url: "/admin",
     icon: Shield,
   },
+];
+
+const managerItems = [
   {
     title: "Site Settings",
-    url: "/admin/settings",
+    url: "/manager/settings",
     icon: Settings,
   },
 ];
@@ -143,6 +146,30 @@ export function AppSidebar({ session }: { session: Session | null }) {
         )}
 
         {(session?.user.role === "ADMIN" ||
+          session?.user.role === "MANAGER") && (
+          <SidebarGroup className="space-y-4">
+            <SidebarGroupLabel className="text-xl font-bold">
+              Manager Dashboard
+            </SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                {managerItems.map((item) => (
+                  <SidebarMenuItem key={item.title}>
+                    <SidebarMenuButton asChild>
+                      <a href={item.url}>
+                        <item.icon />
+                        <span>{item.title}</span>
+                      </a>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                ))}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        )}
+
+        {(session?.user.role === "ADMIN" ||
+          session?.user.role === "MANAGER" ||
           session?.user.role === "EDITOR") && (
           <SidebarGroup className="space-y-4">
             <SidebarGroupLabel className="text-xl font-bold">
@@ -166,6 +193,7 @@ export function AppSidebar({ session }: { session: Session | null }) {
         )}
 
         {(session?.user.role === "ADMIN" ||
+          session?.user.role === "MANAGER" ||
           session?.user.role === "SUPPORT") && (
           <SidebarGroup className="space-y-4">
             <SidebarGroupLabel className="text-xl font-bold">
