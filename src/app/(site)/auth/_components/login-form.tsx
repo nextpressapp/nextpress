@@ -182,9 +182,7 @@ export function LoginForm() {
           </Form>
           <div className="mt-4 text-center">
             <Link href="/auth/forgot-password">
-              <Button variant="outline" className="text-sm hover:underline">
-                Forgot Password?
-              </Button>
+              <Button variant="outline">Forgot Password?</Button>
             </Link>
           </div>
           <div className="mt-2 text-center">
@@ -192,7 +190,6 @@ export function LoginForm() {
               variant="outline"
               onClick={requestVerificationEmail}
               disabled={isRequestingVerification}
-              className="text-sm hover:underline"
             >
               {isRequestingVerification
                 ? "Sending..."

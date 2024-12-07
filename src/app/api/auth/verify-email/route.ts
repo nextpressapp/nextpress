@@ -30,10 +30,9 @@ export async function GET(req: Request) {
 
     await prisma.verificationToken.delete({ where: { token } });
 
-    return NextResponse.redirect(
-      process.env.NEXTAUTH_URL + "/auth/login",
-      { status: 307 },
-    );
+    return NextResponse.redirect(process.env.NEXTAUTH_URL + "/auth/login", {
+      status: 307,
+    });
   } catch (e) {
     console.error("Verification error:", e);
     return NextResponse.json(

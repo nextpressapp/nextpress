@@ -31,7 +31,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
-import {DashboardThemeSwitcher} from "@/app/(dashboard)/dashboard/_components/DashboardThemeSwitcher";
+import { DashboardThemeSwitcher } from "@/app/(dashboard)/dashboard/_components/DashboardThemeSwitcher";
 
 const items = [
   {
