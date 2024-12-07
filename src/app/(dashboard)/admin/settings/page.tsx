@@ -20,7 +20,22 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import {toast} from "@/hooks/use-toast";
+import { toast } from "@/hooks/use-toast";
+
+export interface SiteSettings {
+  siteName: string;
+  description: string;
+  pages: {
+    home: {
+      title: string;
+      description: string;
+    };
+    about: {
+      title: string;
+      description: string;
+    };
+  };
+}
 
 const formSchema = z.object({
   siteName: z.string().min(1, { message: "Site name is required" }),
@@ -35,8 +50,10 @@ const formSchema = z.object({
     .min(1, { message: "About page description is required" }),
 });
 
+type FormValues = z.infer<typeof formSchema>;
+
 export default function AdminSettingsPage() {
-  const [settings, setSettings] = useState<any>(null);
+  const [settings, setSettings] = useState<SiteSettings | null>(null);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -66,9 +83,10 @@ export default function AdminSettingsPage() {
       });
   }, [form]);
 
-  async function onSubmit(values: z.infer<typeof formSchema>) {
-    const newSettings = {
-      ...settings,
+  async function onSubmit(values: FormValues) {
+    if (!settings) return;
+
+    const newSettings: SiteSettings = {
       siteName: values.siteName,
       description: values.description,
       pages: {
@@ -93,18 +111,20 @@ export default function AdminSettingsPage() {
 
     if (response.ok) {
       setSettings(newSettings);
-        toast({
-            title: "Settings Updated",
-            description: "Site Settings Updated successfully.",
-        });
+      toast({
+        title: "Settings Updated",
+        description: "Settings updated successfully.",
+      });
     } else {
-        toast({
-            title: "Error",
-            description: "Failed to update Site Settings.",
-            variant: 'destructive'
-        });
+      toast({
+        title: "Failed to update site settings",
+        description: "Failed to update site settings.",
+        variant: 'destructive'
+      });
     }
   }
+
+  if (!settings) return <div>Loading...</div>;
 
   return (
     <div className="items-center justify-center min-h-screen bg-background">

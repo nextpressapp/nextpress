@@ -32,11 +32,12 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { DashboardThemeSwitcher } from "@/app/(dashboard)/dashboard/_components/DashboardThemeSwitcher";
 import { Session } from "next-auth";
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
+import {SiteSettings} from "@/app/(dashboard)/admin/settings/page";
 
 async function getSiteSettings() {
-  const res = await fetch('/api/admin/settings', { cache: 'no-store' })
-  return res.json()
+  const res = await fetch("/api/admin/settings", { cache: "no-store" });
+  return res.json();
 }
 
 const items = [
@@ -81,18 +82,17 @@ const supportItems = [
   },
 ];
 
-
 export function AppSidebar({ session }: { session: Session | null }) {
-  const [settings, setSettings] = useState();
+  const [settings, setSettings] = useState<SiteSettings | null>(null);
   useEffect(() => {
-    const fetchData = async() => {
+    const fetchData = async () => {
       try {
         const result = await getSiteSettings();
         setSettings(result);
       } catch (error) {
-        console.error('Error etching data:', error);
+        console.error("Error etching data:", error);
       }
-    }
+    };
     fetchData();
   }, [setSettings]);
 
