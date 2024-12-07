@@ -1,6 +1,5 @@
 "use client";
 
-import { Bell, User } from "lucide-react";
 import { ThemeSwitcher } from "@/components/theme-switcher";
 
 export function Header() {

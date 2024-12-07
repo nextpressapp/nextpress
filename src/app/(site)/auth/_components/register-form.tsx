@@ -45,14 +45,18 @@ const formSchema = z.object({
     message: "Please enter a valid email address.",
   }),
   password: passwordSchema,
-  confirmPassword: z
-    .string()
-    .refine((data: any) => data.password === data.confirmPassword, {
-      message: "Passwords do not match.",
-      path: ["confirmPassword"],
-    }),
+  confirmPassword: z.string(),
   captcha: z.string().length(6, "CAPTCHA must be 6 characters long"),
-});
+})
+    .superRefine(({password, confirmPassword}, ctx) => {
+        if (password !== confirmPassword) {
+            ctx.addIssue({
+                code: "custom",
+                path: ["confirmPassword"],
+                message: "Passwords do not match",
+            })
+        }
+    });
 
 export function RegisterForm() {
   const router = useRouter();
@@ -227,6 +231,7 @@ export function RegisterForm() {
                       <div className="space-y-2">
                         {captchaImage && (
                           <div className="border border-gray-300 p-2 rounded-md">
+                              {/* eslint-disable-next-line @next/next/no-img-element */}
                             <img
                               src={captchaImage}
                               alt="CAPTCHA"
