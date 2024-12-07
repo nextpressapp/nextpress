@@ -65,7 +65,7 @@ export default function AdminSettingsPage() {
   });
 
   useEffect(() => {
-    fetch("/api/admin/settings")
+    fetch("/api/manager/settings")
       .then((response) => response.json())
       .then((settings: SiteSettings) => {
         if (settings) {
@@ -84,7 +84,7 @@ export default function AdminSettingsPage() {
   }, [form]);
 
   async function onSubmit(values: FormValues) {
-    const response = await fetch("/api/admin/settings", {
+    const response = await fetch("/api/manager/settings", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

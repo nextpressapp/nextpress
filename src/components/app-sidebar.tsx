@@ -36,7 +36,7 @@ import { useEffect, useState } from "react";
 import { SiteSettings } from "@/app/(dashboard)/manager/settings/page";
 
 async function getSiteSettings() {
-  const res = await fetch("/api/admin/settings", { cache: "no-store" });
+  const res = await fetch("/api/manager/settings", { cache: "no-store" });
   return res.json();
 }
 
