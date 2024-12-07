@@ -18,7 +18,7 @@ import {
   ChevronUp,
   Home,
   LifeBuoy,
-  LogOut,
+  LogOut, Menu,
   Settings,
   Shield,
   User2,
@@ -43,7 +43,7 @@ async function getSiteSettings() {
 const items = [
   {
     title: "Home",
-    url: "/dashboard",
+    url: "/",
     icon: Home,
   },
   {
@@ -67,6 +67,11 @@ const managerItems = [
     url: "/manager/settings",
     icon: Settings,
   },
+  {
+    title: "Menus",
+    url: "/manager/menus",
+    icon: Menu
+  }
 ];
 
 const editorItems = [
