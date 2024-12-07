@@ -176,3 +176,14 @@ enum Priority {
   HIGH
   URGENT
 }
+
+model SiteSettings {
+  id               String   @id @default(cuid())
+  siteName         String
+  description      String
+  homeTitle        String
+  homeDescription  String
+  aboutTitle       String
+  aboutDescription String
+  updatedAt        DateTime @updatedAt
+}

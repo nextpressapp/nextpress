@@ -23,21 +23,18 @@ import { Button } from "@/components/ui/button";
 import { toast } from "@/hooks/use-toast";
 
 export interface SiteSettings {
+  id: string;
   siteName: string;
   description: string;
-  pages: {
-    home: {
-      title: string;
-      description: string;
-    };
-    about: {
-      title: string;
-      description: string;
-    };
-  };
+  homeTitle: string;
+  homeDescription: string;
+  aboutTitle: string;
+  aboutDescription: string;
+  updatedAt: string;
 }
 
 const formSchema = z.object({
+  id: z.string().optional(),
   siteName: z.string().min(1, { message: "Site name is required" }),
   description: z.string().min(1, { message: "Description is required" }),
   homeTitle: z.string().min(1, { message: "Home page title is required" }),
@@ -70,61 +67,46 @@ export default function AdminSettingsPage() {
   useEffect(() => {
     fetch("/api/admin/settings")
       .then((response) => response.json())
-      .then((settings) => {
-        setSettings(settings);
-        form.reset({
-          siteName: settings.siteName,
-          description: settings.description,
-          homeTitle: settings.pages.home.title,
-          homeDescription: settings.pages.home.description,
-          aboutTitle: settings.pages.about.title,
-          aboutDescription: settings.pages.about.description,
-        });
+      .then((settings: SiteSettings) => {
+        if (settings) {
+            setSettings(settings);
+            form.reset({
+                id: settings.id,
+                siteName: settings.siteName,
+                description: settings.description,
+                homeTitle: settings.homeTitle,
+                homeDescription: settings.homeDescription,
+                aboutTitle: settings.aboutTitle,
+                aboutDescription: settings.aboutDescription,
+            });
+        }
       });
   }, [form]);
 
-  async function onSubmit(values: FormValues) {
-    if (!settings) return;
+    async function onSubmit(values: FormValues) {
+        const response = await fetch('/api/admin/settings', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(values),
+        })
 
-    const newSettings: SiteSettings = {
-      siteName: values.siteName,
-      description: values.description,
-      pages: {
-        home: {
-          title: values.homeTitle,
-          description: values.homeDescription,
-        },
-        about: {
-          title: values.aboutTitle,
-          description: values.aboutDescription,
-        },
-      },
-    };
-
-    const response = await fetch("/api/admin/settings", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newSettings),
-    });
-
-    if (response.ok) {
-      setSettings(newSettings);
-      toast({
-        title: "Settings Updated",
-        description: "Settings updated successfully.",
-      });
-    } else {
-      toast({
-        title: "Failed to update site settings",
-        description: "Failed to update site settings.",
-        variant: 'destructive'
-      });
+        if (response.ok) {
+            const updatedSettings = await response.json()
+            setSettings(updatedSettings)
+            toast({
+                title: "Settings updated",
+                description: "Settings updated successfully",
+            });
+        } else {
+            toast({
+                title: "Error",
+                description: "Error updating settings",
+                variant: 'destructive'
+            })
+        }
     }
-  }
-
-  if (!settings) return <div>Loading...</div>;
 
   return (
     <div className="items-center justify-center min-h-screen bg-background">

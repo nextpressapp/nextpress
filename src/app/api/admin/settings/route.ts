@@ -1,23 +1,12 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { NextRequest, NextResponse } from "next/server";
-import path from "path";
-import fs from "node:fs/promises";
+import {prisma} from "@/lib/prisma";
 
-const settingsPath = path.join(process.cwd(), "src", "config", "settings.json");
 
-async function getSiteSettings() {
-  const settings = await fs.readFile(settingsPath, "utf8");
-  return JSON.parse(settings);
-}
-
-async function updateSiteSettings(newSettings: any) {
-  await fs.writeFile(settingsPath, JSON.stringify(newSettings, null, 2));
-}
 
 export async function GET() {
-  console.log(settingsPath);
-  const settings = await getSiteSettings();
+  const settings = await prisma.siteSettings.findFirst()
   return NextResponse.json(settings);
 }
 
@@ -28,6 +17,13 @@ export async function POST(request: NextRequest) {
   }
 
   const newSettings = await request.json();
-  await updateSiteSettings(newSettings);
-  return NextResponse.json({ message: "Successfully updated site settings" });
+  const updatedSettings = await prisma.siteSettings.upsert({
+    where: { id: newSettings.id || 'default' },
+    update: newSettings,
+    create: {
+      ...newSettings,
+      id: 'default'
+    },
+  })
+  return NextResponse.json(updatedSettings);
 }
