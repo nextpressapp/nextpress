@@ -1,51 +1,50 @@
-import { NextRequest, NextResponse } from "next/server";
-import { getToken } from "next-auth/jwt";
+import { NextResponse } from "next/server";
+import { withAuth } from "next-auth/middleware";
 
-export async function middleware(request: NextRequest) {
-  const token = await getToken({
-    req: request,
-    secret: process.env.NEXTAUTH_SECRET,
-  });
+export default withAuth(
+  function middleware(req) {
+    const token = req.nextauth.token;
+    const path = req.nextUrl.pathname;
 
-  if (!token) {
-    return NextResponse.redirect(new URL("/auth/login", request.url));
-  }
+    if (path.startsWith("/admin") && token?.role !== "ADMIN") {
+      return NextResponse.redirect(new URL("/unauthorized", req.url));
+    }
 
-  const role = token.role as string;
+    if (
+      path.startsWith("/editor") &&
+      !["ADMIN", "EDITOR"].includes(token?.role as string)
+    ) {
+      return NextResponse.redirect(new URL("/unauthorized", req.url));
+    }
 
-  if (request.nextUrl.pathname.startsWith("/admin") && role !== "ADMIN") {
-    return NextResponse.redirect(new URL("/", request.url));
-  }
+    if (
+      path.startsWith("/tickets") &&
+      !["ADMIN", "SUPPORT"].includes(token?.role as string)
+    ) {
+      return NextResponse.redirect(new URL("/unauthorized", req.url));
+    }
 
-  if (
-    request.nextUrl.pathname.startsWith("/editor") &&
-    !["ADMIN", "EDITOR"].includes(role)
-  ) {
-    return NextResponse.redirect(new URL("/", request.url));
-  }
-
-  if (
-    request.nextUrl.pathname.startsWith("/support") &&
-    !["ADMIN", "SUPPORT"].includes(role)
-  ) {
-    return NextResponse.redirect(new URL("/", request.url));
-  }
-
-  if (
-    request.nextUrl.pathname.startsWith("/dashboard") &&
-    !["ADMIN", "SUPPORT", "EDITOR", "USER"].includes(role)
-  ) {
-    return NextResponse.redirect(new URL("/", request.url));
-  }
-
-  return NextResponse.next();
-}
+    if (
+      path.startsWith("/dashboard") &&
+      !["ADMIN", "SUPPORT", "EDITOR", "USER"].includes(token?.role as string)
+    ) {
+      return NextResponse.redirect(new URL("/unauthorized", req.url));
+    }
+    return NextResponse.next();
+  },
+  {
+    callbacks: {
+      authorized: ({ token }) => !!token,
+    },
+  },
+);
 
 export const config = {
   matcher: [
     "/admin/:path*",
     "/editor/:path*",
-    "/support/:path*",
+    "/tickets/:path*",
     "/dashboard/:path*",
+    "/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)",
   ],
 };

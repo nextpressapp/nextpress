@@ -29,9 +29,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useSession } from "next-auth/react";
-import { redirect } from "next/navigation";
 import { DashboardThemeSwitcher } from "@/app/(dashboard)/dashboard/_components/DashboardThemeSwitcher";
+import { Session } from "next-auth";
 
 const items = [
   {
@@ -45,13 +44,7 @@ const items = [
     icon: LifeBuoy,
   },
 ];
-export function AppSidebar() {
-  const { data: session } = useSession();
-
-  if (!session) {
-    redirect("/");
-  }
-
+export function AppSidebar({ session }: { session: Session | null }) {
   return (
     <Sidebar>
       <SidebarHeader />
@@ -92,8 +85,8 @@ export function AppSidebar() {
                 side="top"
                 className="w-[--radix-popper-anchor-width]"
               >
-                {(session.user.role === "EDITOR" ||
-                  session.user.role === "ADMIN") && (
+                {(session?.user.role === "EDITOR" ||
+                  session?.user.role === "ADMIN") && (
                   <DropdownMenuItem asChild>
                     <a href="/editor">
                       <Book />
@@ -102,8 +95,8 @@ export function AppSidebar() {
                   </DropdownMenuItem>
                 )}
 
-                {(session.user.role === "SUPPORT" ||
-                  session.user.role === "ADMIN") && (
+                {(session?.user.role === "SUPPORT" ||
+                  session?.user.role === "ADMIN") && (
                   <DropdownMenuItem asChild>
                     <a href="/support">
                       <BadgeHelp />
@@ -112,7 +105,7 @@ export function AppSidebar() {
                   </DropdownMenuItem>
                 )}
 
-                {session.user.role === "ADMIN" && (
+                {session?.user.role === "ADMIN" && (
                   <DropdownMenuItem asChild>
                     <a href="/admin">
                       <Shield />
