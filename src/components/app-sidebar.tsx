@@ -29,8 +29,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/lib/auth";
+import {useSession} from "next-auth/react";
+import {redirect} from "next/navigation";
 
 const items = [
   {
@@ -44,8 +44,12 @@ const items = [
     icon: LifeBuoy,
   },
 ];
-export async function AppSidebar() {
-  const session = await getServerSession(authOptions);
+export function AppSidebar() {
+  const { data: session } = useSession()
+
+  if (!session) {
+    redirect('/')
+  }
 
   return (
     <Sidebar>
@@ -87,8 +91,8 @@ export async function AppSidebar() {
                 className="w-[--radix-popper-anchor-width]"
               >
 
-                {(session!.user.role === "EDITOR" ||
-                  session!.user.role === "ADMIN") && (
+                {(session.user.role === "EDITOR" ||
+                  session.user.role === "ADMIN") && (
                   <DropdownMenuItem asChild>
                     <a href="/editor">
                       <Book />
@@ -97,8 +101,8 @@ export async function AppSidebar() {
                   </DropdownMenuItem>
                 )}
 
-                {(session!.user.role === "SUPPORT" ||
-                  session!.user.role === "ADMIN") && (
+                {(session.user.role === "SUPPORT" ||
+                  session.user.role === "ADMIN") && (
                   <DropdownMenuItem asChild>
                     <a href="/support">
                       <BadgeHelp />
@@ -107,7 +111,7 @@ export async function AppSidebar() {
                   </DropdownMenuItem>
                 )}
 
-                {session!.user.role === "ADMIN" && (
+                {session.user.role === "ADMIN" && (
                   <DropdownMenuItem asChild>
                     <a href="/admin">
                       <Shield />
