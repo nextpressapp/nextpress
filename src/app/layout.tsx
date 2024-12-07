@@ -6,6 +6,7 @@ import { Inter } from "next/font/google";
 import { Providers } from "@/components/Providers";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/toaster";
+import {Analytics} from "@vercel/analytics/vue";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -34,6 +35,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             <Toaster />
           </ThemeProvider>
         </Providers>
+        <Analytics/>
       </body>
     </html>
   );
