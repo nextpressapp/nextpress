@@ -8,7 +8,7 @@ import { Providers } from "@/components/Providers";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/toaster";
 import { Analytics } from "@vercel/analytics/react";
-import {prisma} from "@/lib/prisma";
+import { prisma } from "@/lib/prisma";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,11 +20,11 @@ export async function generateMetadata(): Promise<Metadata> {
   const settings = await getSiteSettings();
   return {
     title: {
-      default: settings?.siteName || 'NextPress',
-      template: `%s | ${settings?.siteName || 'NextPress'}`,
+      default: settings?.siteName || "NextPress",
+      template: `%s | ${settings?.siteName || "NextPress"}`,
     },
-    description: settings?.description || 'A Next.js powered CMS',
-  }
+    description: settings?.description || "A Next.js powered CMS",
+  };
 }
 
 export default function RootLayout({ children }: { children: ReactNode }) {

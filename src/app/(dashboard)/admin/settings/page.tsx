@@ -23,14 +23,14 @@ import { Button } from "@/components/ui/button";
 import { toast } from "@/hooks/use-toast";
 
 export interface SiteSettings {
-  id: string;
+  id?: string;
   siteName: string;
   description: string;
   homeTitle: string;
   homeDescription: string;
   aboutTitle: string;
   aboutDescription: string;
-  updatedAt: string;
+  updatedAt?: string;
 }
 
 const formSchema = z.object({
@@ -69,44 +69,55 @@ export default function AdminSettingsPage() {
       .then((response) => response.json())
       .then((settings: SiteSettings) => {
         if (settings) {
-            setSettings(settings);
-            form.reset({
-                id: settings.id,
-                siteName: settings.siteName,
-                description: settings.description,
-                homeTitle: settings.homeTitle,
-                homeDescription: settings.homeDescription,
-                aboutTitle: settings.aboutTitle,
-                aboutDescription: settings.aboutDescription,
-            });
+          setSettings(settings);
+          form.reset({
+            id: settings.id,
+            siteName: settings.siteName,
+            description: settings.description,
+            homeTitle: settings.homeTitle,
+            homeDescription: settings.homeDescription,
+            aboutTitle: settings.aboutTitle,
+            aboutDescription: settings.aboutDescription,
+          });
         }
       });
   }, [form]);
 
-    async function onSubmit(values: FormValues) {
-        const response = await fetch('/api/admin/settings', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(values),
-        })
+  async function onSubmit(values: FormValues) {
+    const response = await fetch("/api/admin/settings", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(values),
+    });
 
-        if (response.ok) {
-            const updatedSettings = await response.json()
-            setSettings(updatedSettings)
-            toast({
-                title: "Settings updated",
-                description: "Settings updated successfully",
-            });
-        } else {
-            toast({
-                title: "Error",
-                description: "Error updating settings",
-                variant: 'destructive'
-            })
-        }
+    if (response.ok) {
+      const updatedSettings = await response.json();
+      setSettings(updatedSettings);
+      toast({
+        title: "Settings updated",
+        description: "Settings updated successfully",
+      });
+    } else {
+      toast({
+        title: "Error",
+        description: "Error updating settings",
+        variant: "destructive",
+      });
     }
+  }
+
+  if (!settings) {
+    setSettings({
+      siteName: "NextPress",
+      description: "A Next.js powered CMS",
+      homeTitle: "Welcome to NextPress",
+      homeDescription: "Your next-generation CMS",
+      aboutTitle: "About NextPress",
+      aboutDescription: "Learn more about our platform",
+    });
+  }
 
   return (
     <div className="items-center justify-center min-h-screen bg-background">

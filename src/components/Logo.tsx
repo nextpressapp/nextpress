@@ -2,7 +2,7 @@
 
 import { Blocks } from "lucide-react";
 import { useEffect, useState } from "react";
-import {SiteSettings} from "@/app/(dashboard)/admin/settings/page";
+import { SiteSettings } from "@/app/(dashboard)/admin/settings/page";
 
 async function getSiteSettings() {
   const res = await fetch("/api/admin/settings", { cache: "no-store" });
@@ -10,7 +10,7 @@ async function getSiteSettings() {
 }
 
 export const Logo = () => {
-    const [settings, setSettings] = useState<SiteSettings | null>(null);
+  const [settings, setSettings] = useState<SiteSettings | null>(null);
   useEffect(() => {
     const fetchData = async () => {
       try {
