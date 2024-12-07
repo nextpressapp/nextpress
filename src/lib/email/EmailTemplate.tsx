@@ -62,10 +62,6 @@ const containerStyle = {
   marginBottom: "64px",
 };
 
-const logoStyle = {
-  margin: "0 auto",
-};
-
 const headerStyle = {
   color: "#333",
   fontSize: "24px",
