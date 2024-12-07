@@ -4,7 +4,7 @@ import { prisma } from "@/lib/prisma";
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
   const token = searchParams.get("token");
-  console.log('Token:', token);
+  console.log("Token:", token);
 
   if (!token) {
     return NextResponse.json({ error: "Missing token" }, { status: 400 });
@@ -32,7 +32,7 @@ export async function GET(req: Request) {
 
     await prisma.verificationToken.delete({ where: { token } });
 
-    console.log('I GET HERE')
+    console.log("I GET HERE");
     return NextResponse.redirect(
       process.env.NEXT_PUBLIC_APP_URL + "/auth/login",
       { status: 307 },

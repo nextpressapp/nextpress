@@ -1,14 +1,14 @@
-import {prisma} from "@/lib/prisma";
-import {Card, CardHeader, CardTitle} from "@/components/ui/card";
+import { prisma } from "@/lib/prisma";
+import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 
 async function getPosts() {
-    const posts = await prisma.post.findMany({
-        where: {published: true},
-        include: {author: {select: {name: true}}},
-        orderBy: {createdAt: "desc"},
-    });
-    console.log(JSON.stringify(posts));
-    return posts;
+  const posts = await prisma.post.findMany({
+    where: { published: true },
+    include: { author: { select: { name: true } } },
+    orderBy: { createdAt: "desc" },
+  });
+  console.log(JSON.stringify(posts));
+  return posts;
 }
 
 export default async function BlogPage() {

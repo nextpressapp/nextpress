@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import {
   Sidebar,
@@ -29,8 +29,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import {useSession} from "next-auth/react";
-import {redirect} from "next/navigation";
+import { useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
 
 const items = [
   {
@@ -45,10 +45,10 @@ const items = [
   },
 ];
 export function AppSidebar() {
-  const { data: session } = useSession()
+  const { data: session } = useSession();
 
   if (!session) {
-    redirect('/')
+    redirect("/");
   }
 
   return (
@@ -90,7 +90,6 @@ export function AppSidebar() {
                 side="top"
                 className="w-[--radix-popper-anchor-width]"
               >
-
                 {(session.user.role === "EDITOR" ||
                   session.user.role === "ADMIN") && (
                   <DropdownMenuItem asChild>

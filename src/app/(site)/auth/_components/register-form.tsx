@@ -37,31 +37,32 @@ const passwordSchema = z
     return result.score >= 3;
   }, "Password is too weak. Please choose a stronger password.");
 
-const formSchema = z.object({
-  name: z.string().min(2, {
-    message: "Name must be at least 2 characters.",
-  }),
-  email: z.string().email({
-    message: "Please enter a valid email address.",
-  }),
-  password: passwordSchema,
-  confirmPassword: z.string(),
-  captcha: z.string().length(6, "CAPTCHA must be 6 characters long"),
-})
-    .superRefine(({password, confirmPassword}, ctx) => {
-        if (password !== confirmPassword) {
-            ctx.addIssue({
-                code: "custom",
-                path: ["confirmPassword"],
-                message: "Passwords do not match",
-            })
-        }
-    });
+const formSchema = z
+  .object({
+    name: z.string().min(2, {
+      message: "Name must be at least 2 characters.",
+    }),
+    email: z.string().email({
+      message: "Please enter a valid email address.",
+    }),
+    password: passwordSchema,
+    confirmPassword: z.string(),
+    captcha: z.string().length(6, "CAPTCHA must be 6 characters long"),
+  })
+  .superRefine(({ password, confirmPassword }, ctx) => {
+    if (password !== confirmPassword) {
+      ctx.addIssue({
+        code: "custom",
+        path: ["confirmPassword"],
+        message: "Passwords do not match",
+      });
+    }
+  });
 
 export function RegisterForm() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
-  const [captcha, setCaptcha] = useState('')
+  const [captcha, setCaptcha] = useState("");
   const [passwordStrength, setPasswordStrength] = useState(0);
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -78,7 +79,7 @@ export function RegisterForm() {
   const loadCaptcha = async () => {
     const response = await fetch("/api/auth/captcha");
     const data = await response.json();
-    setCaptcha(data.captcha)
+    setCaptcha(data.captcha);
   };
 
   useEffect(() => {
@@ -227,14 +228,14 @@ export function RegisterForm() {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>CAPTCHA</FormLabel>
-                      <FormControl>
-                          <div className="space-y-2">
-                              <div className="border border-gray-300 p-2 rounded-md font-mono text-lg text-center">
-                                  {captcha}
-                              </div>
-                              <Input placeholder="Enter CAPTCHA" {...field} />
-                          </div>
-                      </FormControl>
+                    <FormControl>
+                      <div className="space-y-2">
+                        <div className="border border-gray-300 p-2 rounded-md font-mono text-lg text-center">
+                          {captcha}
+                        </div>
+                        <Input placeholder="Enter CAPTCHA" {...field} />
+                      </div>
+                    </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
