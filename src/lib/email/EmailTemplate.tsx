@@ -10,7 +10,7 @@ import {
   Button,
   Hr,
 } from "@react-email/components";
-import { EmailLogo } from "@/components/Logo";
+import { EmailLogo } from "@/components/EmailLogo";
 
 interface EmailTemplateProps {
   previewText: string;

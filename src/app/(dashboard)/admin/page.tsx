@@ -1,5 +1,5 @@
 import { AdminDashboard } from "@/app/(dashboard)/admin/_components/AdminDashboard";
-import {prisma} from "@/lib/prisma";
+import { prisma } from "@/lib/prisma";
 
 export default async function DashboardPage() {
   const stats = await prisma.$transaction([

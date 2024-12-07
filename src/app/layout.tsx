@@ -1,6 +1,7 @@
 import "@/styles/globals.css";
 
 import { ReactNode } from "react";
+import {Metadata} from "next";
 import { cn } from "@/lib/utils";
 import { Inter } from "next/font/google";
 import { Providers } from "@/components/Providers";
@@ -10,10 +11,21 @@ import { Analytics } from "@vercel/analytics/react";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export const metadata = {
-  title: "NextPress",
-  description: "A WordPress clone built with Next.js",
-};
+async function getSiteSettings() {
+  const res = await fetch(`${process.env.NEXTAUTH_URL}/api/admin/settings`, { cache: 'no-store' })
+  return res.json()
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+  const settings = await getSiteSettings()
+  return {
+    title: {
+      default: settings.siteName,
+      template: `%s | ${settings.siteName}`,
+    },
+    description: settings.description,
+  }
+}
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (

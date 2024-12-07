@@ -1,15 +1,14 @@
-'use client'
+"use client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import {Calendar, FileText, StickyNote, Users} from "lucide-react";
-
+import { Calendar, FileText, StickyNote, Users } from "lucide-react";
 
 export function AdminDashboard({ stats }: { stats: number[] }) {
-    const cards = [
-        { title: "Users", value: stats[0], icon: Users },
-        { title: "Posts", value: stats[1], icon: StickyNote },
-        { title: "Pages", value: stats[2], icon: FileText },
-        { title: "Events", value: stats[3], icon: Calendar },
-    ];
+  const cards = [
+    { title: "Users", value: stats[0], icon: Users },
+    { title: "Posts", value: stats[1], icon: StickyNote },
+    { title: "Pages", value: stats[2], icon: FileText },
+    { title: "Events", value: stats[3], icon: Calendar },
+  ];
 
   return (
     <div>
