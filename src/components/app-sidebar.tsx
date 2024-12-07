@@ -33,7 +33,7 @@ import {
 import { DashboardThemeSwitcher } from "@/app/(dashboard)/dashboard/_components/DashboardThemeSwitcher";
 import { Session } from "next-auth";
 import { useEffect, useState } from "react";
-import { SiteSettings } from "@/app/(dashboard)/admin/settings/page";
+import { SiteSettings } from "@/app/(dashboard)/manager/settings/page";
 
 async function getSiteSettings() {
   const res = await fetch("/api/admin/settings", { cache: "no-store" });
