@@ -61,7 +61,7 @@ const formSchema = z.object({
 export function RegisterForm() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
-  const [captchaImage, setCaptchaImage] = useState("");
+  const [captcha, setCaptcha] = useState('')
   const [passwordStrength, setPasswordStrength] = useState(0);
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -78,7 +78,7 @@ export function RegisterForm() {
   const loadCaptcha = async () => {
     const response = await fetch("/api/auth/captcha");
     const data = await response.json();
-    setCaptchaImage(data.image);
+    setCaptcha(data.captcha)
   };
 
   useEffect(() => {
@@ -227,21 +227,14 @@ export function RegisterForm() {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>CAPTCHA</FormLabel>
-                    <FormControl>
-                      <div className="space-y-2">
-                        {captchaImage && (
-                          <div className="border border-gray-300 p-2 rounded-md">
-                              {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img
-                              src={captchaImage}
-                              alt="CAPTCHA"
-                              className="w-full"
-                            />
+                      <FormControl>
+                          <div className="space-y-2">
+                              <div className="border border-gray-300 p-2 rounded-md font-mono text-lg text-center">
+                                  {captcha}
+                              </div>
+                              <Input placeholder="Enter CAPTCHA" {...field} />
                           </div>
-                        )}
-                        <Input placeholder="Enter CAPTCHA" {...field} />
-                      </div>
-                    </FormControl>
+                      </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}

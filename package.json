@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "uname -a && next build",
+    "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "postinstall": "prisma generate"
@@ -25,7 +25,6 @@
     "@radix-ui/react-toast": "^1.2.2",
     "@radix-ui/react-tooltip": "^1.1.4",
     "bcryptjs": "^2.4.3",
-    "canvas": "^2.11.2",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lru-cache": "^11.0.2",

@@ -49,6 +49,8 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "CAPTCHA has expired" }, { status: 400 });
     }
 
+    console.log(captcha.toString());
+    console.log(storedCaptcha);
     if (captcha.toUpperCase() !== storedCaptcha) {
       return NextResponse.json({ error: "Invalid CAPTCHA" }, { status: 400 });
     }
