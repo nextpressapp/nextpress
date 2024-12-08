@@ -1,3 +1,5 @@
+npm --no-git-tag-version version patch
+git add .
 npx tsc --noEmit
 npx eslint --fix .
 npx prettier --write .
