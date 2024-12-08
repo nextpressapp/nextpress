@@ -35,13 +35,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { DashboardThemeSwitcher } from "@/app/(dashboard)/dashboard/_components/DashboardThemeSwitcher";
 import { Session } from "next-auth";
-import { useEffect, useState } from "react";
-import { SiteSettings } from "@/app/(dashboard)/manager/settings/page";
-
-async function getSiteSettings() {
-    const res = await fetch("/api/manager/settings", { cache: "no-store" });
-    return res.json();
-}
+import { Logo } from "@/components/Logo";
 
 const items = [
     {
@@ -104,26 +98,13 @@ const supportItems = [
 ];
 
 export function AppSidebar({ session }: { session: Session | null }) {
-    const [settings, setSettings] = useState<SiteSettings | null>(null);
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const result = await getSiteSettings();
-                setSettings(result);
-            } catch (error) {
-                console.error("Error etching data:", error);
-            }
-        };
-        fetchData();
-    }, [setSettings]);
-
     return (
         <Sidebar>
             <SidebarHeader />
             <SidebarContent>
                 <SidebarGroup className="space-y-4">
                     <SidebarGroupLabel className="text-2xl font-bold">
-                        {settings?.siteName}
+                        <Logo />
                     </SidebarGroupLabel>
                     <SidebarGroupContent>
                         <SidebarMenu>
