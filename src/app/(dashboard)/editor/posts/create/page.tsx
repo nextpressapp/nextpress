@@ -4,16 +4,19 @@ import { getServerSession } from "next-auth";
 import PostForm from "@/app/(dashboard)/editor/posts/_components/PostForm";
 
 export default async function CreatePostPage() {
-  const session = await getServerSession(authOptions);
+    const session = await getServerSession(authOptions);
 
-  if (!session || !["ADMIN", "MANAGER", "EDITOR"].includes(session.user.role)) {
-    redirect("/");
-  }
+    if (
+        !session ||
+        !["ADMIN", "MANAGER", "EDITOR"].includes(session.user.role)
+    ) {
+        redirect("/");
+    }
 
-  return (
-    <div>
-      <h2 className="text-2xl font-bold mb-4">Create New Post</h2>
-      <PostForm />
-    </div>
-  );
+    return (
+        <div>
+            <h2 className="text-2xl font-bold mb-4">Create New Post</h2>
+            <PostForm />
+        </div>
+    );
 }
