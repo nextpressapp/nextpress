@@ -49,16 +49,16 @@ export async function PUT(
 }
 
 export async function DELETE(
-    req: Request,
-    { params }: { params: { id: string } },
+  req: Request,
+  { params }: { params: { id: string } },
 ) {
   const session = await getServerSession(authOptions);
 
   if (!session || !["ADMIN", "EDITOR", "MANAGER"].includes(session.user.role)) {
-    return NextResponse.json({error: "Not authorized"}, {status: 403});
+    return NextResponse.json({ error: "Not authorized" }, { status: 403 });
   }
 
-  await prisma.page.delete({where: { id: params.id }});
+  await prisma.page.delete({ where: { id: params.id } });
 
   return NextResponse.json({ message: "Page deleted successfully" });
 }
