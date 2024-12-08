@@ -59,8 +59,6 @@ export async function POST(req: Request) {
       { error: "Failed to create menu" },
       { status: 500 },
     );
-  } finally {
-    await prisma.$disconnect();
   }
 }
 
