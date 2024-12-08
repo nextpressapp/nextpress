@@ -26,6 +26,7 @@ import { toast } from "@/hooks/use-toast";
 interface Page {
   id: string;
   title: string;
+  slug: string;
   published: boolean;
   author: {
     name: string | null;
@@ -71,6 +72,7 @@ export default function PagesTable({ pages }: PagesTableProps) {
         <TableHeader>
           <TableRow>
             <TableHead>Title</TableHead>
+            <TableHead>Slug</TableHead>
             <TableHead>Author</TableHead>
             <TableHead>Status</TableHead>
             <TableHead>Actions</TableHead>
@@ -80,6 +82,7 @@ export default function PagesTable({ pages }: PagesTableProps) {
           {pages.map((page) => (
             <TableRow key={page.id}>
               <TableCell>{page.title}</TableCell>
+              <TableCell>{page.slug}</TableCell>
               <TableCell>{page.author.name || "Unknown Author"}</TableCell>
               <TableCell>{page.published ? "Published" : "Draft"}</TableCell>
               <TableCell className="flex space-x-2">
