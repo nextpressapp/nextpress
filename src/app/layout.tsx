@@ -10,8 +10,9 @@ import { Toaster } from "@/components/ui/toaster";
 import { Analytics } from "@vercel/analytics/next";
 import { prisma } from "@/lib/prisma";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { CookieConsentBanner} from "@/components/CookieConsent";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ['latin'], display: 'swap', adjustFontFallback: false})
 
 async function getSiteSettings() {
   return await prisma.siteSettings.findFirst();
@@ -50,6 +51,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         </Providers>
         <Analytics />
         <SpeedInsights />
+      <CookieConsentBanner/>
       </body>
     </html>
   );
