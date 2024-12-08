@@ -99,6 +99,7 @@ export default function AdminSettingsPage() {
                 title: "Settings updated",
                 description: "Settings updated successfully",
             });
+            window.location.reload();
         } else {
             toast({
                 title: "Error",
