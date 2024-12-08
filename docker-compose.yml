@@ -1,32 +1,32 @@
 services:
-  db:
-    image: postgres:14
-    restart: always
-    environment:
-      POSTGRES_USER: nextpress
-      POSTGRES_PASSWORD: nextpress
-      POSTGRES_DB: nextpress
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
+    db:
+        image: postgres:14
+        restart: always
+        environment:
+            POSTGRES_USER: nextpress
+            POSTGRES_PASSWORD: nextpress
+            POSTGRES_DB: nextpress
+        volumes:
+            - postgres_data:/var/lib/postgresql/data
+        ports:
+            - "5432:5432"
 
-  pgweb:
-    image: sosedoff/pgweb
-    restart: always
-    environment:
-      DATABASE_URL: postgres://nextpress:nextpress@db:5432/nextpress?sslmode=disable
-    ports:
-      - "8081:8081"
-    depends_on:
-      - db
+    pgweb:
+        image: sosedoff/pgweb
+        restart: always
+        environment:
+            DATABASE_URL: postgres://nextpress:nextpress@db:5432/nextpress?sslmode=disable
+        ports:
+            - "8081:8081"
+        depends_on:
+            - db
 
-  mailpit:
-    image: axllent/mailpit
-    restart: always
-    ports:
-      - "1025:1025"
-      - "8025:8025"
+    mailpit:
+        image: axllent/mailpit
+        restart: always
+        ports:
+            - "1025:1025"
+            - "8025:8025"
 
 volumes:
-  postgres_data:
+    postgres_data:

@@ -2,12 +2,12 @@ import { AdminDashboard } from "@/app/(dashboard)/admin/_components/AdminDashboa
 import { prisma } from "@/lib/prisma";
 
 export default async function AdminDashboardPage() {
-  const stats = await prisma.$transaction([
-    prisma.user.count(),
-    prisma.post.count(),
-    prisma.page.count(),
-    prisma.event.count(),
-  ]);
+    const stats = await prisma.$transaction([
+        prisma.user.count(),
+        prisma.post.count(),
+        prisma.page.count(),
+        prisma.event.count(),
+    ]);
 
-  return <AdminDashboard stats={stats} />;
+    return <AdminDashboard stats={stats} />;
 }

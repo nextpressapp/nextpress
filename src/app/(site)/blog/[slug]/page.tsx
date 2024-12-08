@@ -1,12 +1,12 @@
-import {prisma} from "@/lib/prisma";
-import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
-import {notFound} from "next/navigation";
+import { prisma } from "@/lib/prisma";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { notFound } from "next/navigation";
 import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
 import remarkGfm from "remark-gfm";
-import {Prism as SyntaxHighlighter} from "react-syntax-highlighter";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import dark from "react-syntax-highlighter/dist/esm/styles/hljs/dark";
-import {CopyCodeButton} from "@/app/(site)/[slug]/codeCopyBtn";
+import { CopyCodeButton } from "@/app/(site)/[slug]/codeCopyBtn";
 
 async function getPost(slug: string) {
     const post = await prisma.post.findUnique({
@@ -20,8 +20,8 @@ async function getPost(slug: string) {
 }
 
 export default async function BlogPostPage({
-                                               params,
-                                           }: {
+    params,
+}: {
     params: { slug: string };
 }) {
     const post = await getPost(params.slug);
@@ -57,8 +57,13 @@ export default async function BlogPostPage({
                                 <div className="relative">{children}</div>
                             ),
                             code({ className = "", children, ...props }) {
-                                const match = /language-(\w+)/.exec(className || "");
-                                const code = String(children).replace(/\n$/, "");
+                                const match = /language-(\w+)/.exec(
+                                    className || ""
+                                );
+                                const code = String(children).replace(
+                                    /\n$/,
+                                    ""
+                                );
 
                                 return match ? (
                                     <div className="relative">
