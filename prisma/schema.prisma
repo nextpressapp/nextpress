@@ -86,9 +86,9 @@ model Post {
 
 model Page {
   id        String   @id @default(cuid())
+  slug      String   @unique
   title     String
   content   String   @db.Text
-  slug      String   @unique
   published Boolean  @default(false)
   authorId  String
   createdAt DateTime @default(now())

@@ -23,6 +23,7 @@ import {
   Menu,
   Settings,
   Shield,
+  StickyNote,
   User2,
   UserPen,
 } from "lucide-react";
@@ -86,6 +87,11 @@ const editorItems = [
     title: "Pages",
     url: "/editor/pages",
     icon: BookOpen,
+  },
+  {
+    title: "Posts",
+    url: "/editor/posts",
+    icon: StickyNote,
   },
 ];
 

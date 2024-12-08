@@ -1,22 +1,22 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { toast } from "@/hooks/use-toast";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
+import { toast } from "@/hooks/use-toast";
 import MDEditor from "@uiw/react-md-editor";
-import rehypeSanitize from "rehype-sanitize";
 import {
   getCommands,
   getExtraCommands,
 } from "@uiw/react-md-editor/commands-cn";
+import rehypeSanitize from "rehype-sanitize";
 import { useTheme } from "next-themes";
 
-interface PageFormProps {
-  page?: {
+interface PostFormProps {
+  post?: {
     id: string;
     title: string;
     content: string;
@@ -25,25 +25,32 @@ interface PageFormProps {
   };
 }
 
-export default function PageForm({ page }: PageFormProps) {
+export default function PostForm({ post }: PostFormProps) {
   const { theme } = useTheme();
-  const [title, setTitle] = useState(page?.title || "");
-  const [content, setContent] = useState(page?.content || "");
-  const [slug, setSlug] = useState(page?.slug || "");
-  const [published, setPublished] = useState(page?.published || false);
+  const [title, setTitle] = useState(post?.title || "");
+  const [content, setContent] = useState(post?.content || "");
+  const [slug, setSlug] = useState(post?.slug || "");
+  const [published, setPublished] = useState(post?.published || false);
   const router = useRouter();
 
   useEffect(() => {
-    if (!page) {
+    if (!post) {
       setSlug(generateSlug(title));
     }
-  }, [title, page]);
+  }, [title, post]);
+
+  const generateSlug = (text: string) => {
+    return text
+      .toLowerCase()
+      .replace(/[^\w ]+/g, "")
+      .replace(/ +/g, "-");
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const url = page ? `/api/pages/${page.id}` : "/api/pages";
-      const method = page ? "PUT" : "POST";
+      const url = post ? `/api/posts/${post.id}` : "/api/posts";
+      const method = post ? "PUT" : "POST";
 
       const response = await fetch(url, {
         method,
@@ -53,35 +60,28 @@ export default function PageForm({ page }: PageFormProps) {
 
       if (response.ok) {
         toast({
-          title: page ? "Page updated" : "Page created",
-          description: page
-            ? "Your page has been updated successfully."
-            : "Your page has been created successfully.",
+          title: post ? "Post updated" : "Post created",
+          description: post
+            ? "Your post has been updated successfully."
+            : "Your post has been created successfully.",
         });
-        router.push("/editor/pages");
+        router.push("/editor/posts");
       } else {
         const data = await response.json();
         toast({
           title: "Error",
-          description: data.error || "An error occurred while saving the page.",
+          description: data.error || "An error occurred while saving the post.",
           variant: "destructive",
         });
       }
     } catch (error) {
-      console.error("Page save error:", error);
+      console.error("Post save error:", error);
       toast({
         title: "Error",
-        description: "An error occurred while saving the page.",
+        description: "An error occurred while saving the post.",
         variant: "destructive",
       });
     }
-  };
-
-  const generateSlug = (text: string) => {
-    return text
-      .toLowerCase()
-      .replace(/[^\w ]+/g, "")
-      .replace(/ +/g, "-");
   };
 
   return (
@@ -125,7 +125,7 @@ export default function PageForm({ page }: PageFormProps) {
         />
         <Label htmlFor="published">Published</Label>
       </div>
-      <Button type="submit">{page ? "Update" : "Create"} Page</Button>
+      <Button type="submit">{post ? "Update" : "Create"} Post</Button>
     </form>
   );
 }
