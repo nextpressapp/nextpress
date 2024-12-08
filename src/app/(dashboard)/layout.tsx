@@ -5,19 +5,19 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 
 export default async function DashboardLayout({
-  children,
+    children,
 }: {
-  children: ReactNode;
+    children: ReactNode;
 }) {
-  const session = await getServerSession(authOptions);
+    const session = await getServerSession(authOptions);
 
-  return (
-    <SidebarProvider>
-      <AppSidebar session={session} />
-      <main className="border w-full">
-        <SidebarTrigger />
-        {children}
-      </main>
-    </SidebarProvider>
-  );
+    return (
+        <SidebarProvider>
+            <AppSidebar session={session} />
+            <main className="border w-full">
+                <SidebarTrigger />
+                {children}
+            </main>
+        </SidebarProvider>
+    );
 }
