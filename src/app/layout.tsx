@@ -19,7 +19,6 @@ async function getSiteSettings() {
 
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await getSiteSettings();
-  console.log(settings);
   return {
     title: {
       default: settings?.siteName || "NextPress",

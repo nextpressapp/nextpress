@@ -57,8 +57,6 @@ export async function POST(req: Request) {
       );
     }
 
-    console.log(captcha.toString());
-    console.log(storedCaptcha);
     if (captcha.toUpperCase() !== storedCaptcha) {
       return NextResponse.json({ error: "Invalid CAPTCHA" }, { status: 400 });
     }
