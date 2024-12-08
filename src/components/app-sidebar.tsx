@@ -15,10 +15,12 @@ import {
 import {
   BadgeHelp,
   Book,
+  BookOpen,
   ChevronUp,
   Home,
   LifeBuoy,
-  LogOut, Menu,
+  LogOut,
+  Menu,
   Settings,
   Shield,
   User2,
@@ -70,8 +72,8 @@ const managerItems = [
   {
     title: "Menus",
     url: "/manager/menus",
-    icon: Menu
-  }
+    icon: Menu,
+  },
 ];
 
 const editorItems = [
@@ -79,6 +81,11 @@ const editorItems = [
     title: "Dashboard",
     url: "/editor",
     icon: Book,
+  },
+  {
+    title: "Pages",
+    url: "/editor/pages",
+    icon: BookOpen,
   },
 ];
 

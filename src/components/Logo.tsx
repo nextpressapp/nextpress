@@ -1,8 +1,8 @@
 "use client";
 
 import { Blocks } from "lucide-react";
-import {useEffect, useState} from "react";
-import {SiteSettings} from "@/app/(dashboard)/manager/settings/page";
+import { useEffect, useState } from "react";
+import { SiteSettings } from "@/app/(dashboard)/manager/settings/page";
 
 async function getSiteSettings() {
   const res = await fetch("/api/manager/settings", { cache: "no-store" });
