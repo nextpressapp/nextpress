@@ -4,12 +4,12 @@ import Testimonials from "@/app/_components/Testimonials";
 import FAQ from "@/app/_components/FAQ";
 
 export default function Home() {
-    return (
-        <main>
-            <Hero />
-            <Features />
-            <Testimonials />
-            <FAQ />
-        </main>
-    );
+  return (
+    <main>
+      <Hero />
+      <Features />
+      <Testimonials />
+      <FAQ />
+    </main>
+  );
 }

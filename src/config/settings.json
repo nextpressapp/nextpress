@@ -1,14 +1,14 @@
 {
-    "siteName": "NextPress",
-    "description": "A Next.js powered CMS",
-    "pages": {
-        "home": {
-            "title": "Welcome to NextPress",
-            "description": "Your next-generation CMS"
-        },
-        "about": {
-            "title": "About NextPress",
-            "description": "Learn more about our platform"
-        }
+  "siteName": "NextPress",
+  "description": "A Next.js powered CMS",
+  "pages": {
+    "home": {
+      "title": "Welcome to NextPress",
+      "description": "Your next-generation CMS"
+    },
+    "about": {
+      "title": "About NextPress",
+      "description": "Learn more about our platform"
     }
+  }
 }
