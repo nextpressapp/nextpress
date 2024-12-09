@@ -7,16 +7,16 @@ import { Header } from "@/app/(site)/_components/Header";
 import { Footer } from "@/app/(site)/_components/Footer";
 
 export default function SiteLayout({
-    children,
+  children,
 }: Readonly<{
-    children: ReactNode;
+  children: ReactNode;
 }>) {
-    return (
-        <>
-            <Header />
-            <main>{children}</main>
-            <ScrollToTopButton />
-            <Footer />
-        </>
-    );
+  return (
+    <>
+      <Header />
+      <main>{children}</main>
+      <ScrollToTopButton />
+      <Footer />
+    </>
+  );
 }

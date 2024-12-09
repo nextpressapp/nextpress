@@ -4,24 +4,24 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
 export async function GET() {
-    const settings = await prisma.siteSettings.findFirst();
-    return NextResponse.json(settings);
+  const settings = await prisma.siteSettings.findFirst();
+  return NextResponse.json(settings);
 }
 
 export async function POST(request: NextRequest) {
-    const session = await getServerSession(authOptions);
-    if (!session || !["ADMIN", "MANAGER"].includes(session.user.role)) {
-        return NextResponse.json({ error: "Not authorized" }, { status: 403 });
-    }
+  const session = await getServerSession(authOptions);
+  if (!session || !["ADMIN", "MANAGER"].includes(session.user.role)) {
+    return NextResponse.json({ error: "Not authorized" }, { status: 403 });
+  }
 
-    const newSettings = await request.json();
-    const updatedSettings = await prisma.siteSettings.upsert({
-        where: { id: newSettings.id || "default" },
-        update: newSettings,
-        create: {
-            ...newSettings,
-            id: "default",
-        },
-    });
-    return NextResponse.json(updatedSettings);
+  const newSettings = await request.json();
+  const updatedSettings = await prisma.siteSettings.upsert({
+    where: { id: newSettings.id || "default" },
+    update: newSettings,
+    create: {
+      ...newSettings,
+      id: "default",
+    },
+  });
+  return NextResponse.json(updatedSettings);
 }
