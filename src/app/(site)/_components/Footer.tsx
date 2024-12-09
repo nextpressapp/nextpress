@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { version } from "@/../package.json";
+import packageInfo from "@/../package.json";
 interface MenuItem {
   id: string;
   label: string;
@@ -65,7 +65,7 @@ export function Footer() {
         </div>
         <div className="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700 items-center justify-center">
           <p className="text-sm text-center text-gray-600 dark:text-gray-300">
-            © {new Date().getFullYear()} NextPress {version}. All rights reserved.
+            © {new Date().getFullYear()} NextPress {packageInfo.version}. All rights reserved.
           </p>
         </div>
       </div>
