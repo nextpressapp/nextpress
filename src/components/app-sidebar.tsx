@@ -19,6 +19,7 @@ import {
   CalendarDays,
   ChevronUp,
   Home,
+  LayoutDashboard,
   LifeBuoy,
   LogOut,
   Menu,
@@ -26,7 +27,6 @@ import {
   Shield,
   StickyNote,
   User2,
-  UserPen,
 } from "lucide-react";
 import {
   DropdownMenu,
@@ -44,6 +44,11 @@ const items = [
     title: "Home",
     url: "/",
     icon: Home,
+  },
+  {
+    title: "Dashboard",
+    url: "/dashboard",
+    icon: LayoutDashboard,
   },
   {
     title: "Tickets",
@@ -221,12 +226,6 @@ export function AppSidebar({ session }: { session: Session | null }) {
                 </SidebarMenuButton>
               </DropdownMenuTrigger>
               <DropdownMenuContent side="top" className="w-[--radix-popper-anchor-width]">
-                <DropdownMenuItem asChild>
-                  <a href="/dashboard/profile">
-                    <UserPen />
-                    Profile
-                  </a>
-                </DropdownMenuItem>
                 <DropdownMenuItem asChild>
                   <a href="/auth/signout">
                     <LogOut />
