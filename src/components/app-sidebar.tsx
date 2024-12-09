@@ -37,7 +37,7 @@ import {
 import { DashboardThemeSwitcher } from "@/app/(dashboard)/dashboard/_components/DashboardThemeSwitcher";
 import { Session } from "next-auth";
 import { Logo } from "@/components/Logo";
-import { version } from "@/../package.json";
+import packageInfo from "@/../package.json";
 
 const items = [
   {
@@ -235,7 +235,7 @@ export function AppSidebar({ session }: { session: Session | null }) {
               </DropdownMenuContent>
             </DropdownMenu>
           </SidebarMenuItem>
-          Nextpress {version}
+          Nextpress {packageInfo.version}
         </SidebarMenu>
       </SidebarFooter>
     </Sidebar>

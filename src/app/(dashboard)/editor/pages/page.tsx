@@ -7,7 +7,7 @@ import PagesTable from "@/app/(dashboard)/editor/pages/_components/PagesTable";
 export default async function EditorPagesPage() {
   const session = await getServerSession(authOptions);
 
-  if (!session || session.user.role !== "ADMIN") {
+  if (!session || !["ADMIN", "MANAGER", "EDITOR"].includes(session.user.role)) {
     redirect("/");
   }
 
