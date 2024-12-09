@@ -85,9 +85,9 @@ export function TicketList({ initialTickets }: TicketListProps) {
                       <div className="space-y-4">
                         <CommentForm onSubmit={content => addComment(ticket.id, content)} />
                         {ticket.comments.map(comment => (
-                          <div key={comment.id} className="bg-gray-100 p-2 rounded">
+                          <div key={comment.id} className="p-2 rounded">
                             <p>{comment.content}</p>
-                            <p className="text-sm text-gray-500">
+                            <p className="text-sm">
                               By {comment.user.name} on {new Date(comment.createdAt).toLocaleString()}
                             </p>
                           </div>

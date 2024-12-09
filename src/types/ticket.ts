@@ -4,4 +4,5 @@ export interface TicketWithComments extends Omit<Ticket, "status" | "priority"> 
   status: Status;
   priority: Priority;
   comments: (Comment & { user: User })[];
+  createdBy: User;
 }
