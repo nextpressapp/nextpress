@@ -26,7 +26,6 @@ import {
   Settings,
   Shield,
   StickyNote,
-  User2,
 } from "lucide-react";
 import {
   DropdownMenu,
@@ -38,6 +37,7 @@ import { DashboardThemeSwitcher } from "@/app/(dashboard)/dashboard/_components/
 import { Session } from "next-auth";
 import { Logo } from "@/components/Logo";
 import packageInfo from "@/../package.json";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const items = [
   {
@@ -221,7 +221,11 @@ export function AppSidebar({ session }: { session: Session | null }) {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <SidebarMenuButton>
-                  <User2 /> {session?.user.name}
+                  <Avatar className="w-5 h-5">
+                    <AvatarImage src={session?.user?.image || undefined} alt="User avatar" />
+                    <AvatarFallback>{session?.user?.name?.[0] || "U"}</AvatarFallback>
+                  </Avatar>
+                  {session?.user.name}
                   <ChevronUp className="ml-auto" />
                 </SidebarMenuButton>
               </DropdownMenuTrigger>
