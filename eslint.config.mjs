@@ -41,7 +41,8 @@ const config = [
       "import/order": ["error", { "newlines-between": "always" }],
       // your TS/console prefs
       "@typescript-eslint/no-explicit-any": "off",
-      "no-console": ["warn", { allow: ["warn", "error"] }],
+      // "no-console": ["warn", { allow: ["warn", "error"] }],
+      "no-console": "off",
     },
   },
 

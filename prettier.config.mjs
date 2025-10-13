@@ -10,36 +10,46 @@ const prettierConfig = {
   printWidth: 100,
   trailingComma: "es5",
 
-  // Add <BUILTIN_MODULES> here to keep Node built-ins at the top (replaces the old trivago flag)
   importOrder: [
     "<BUILTIN_MODULES>",
-    "^(react/(.*)$)|^(react$)",
-    "^(next/(.*)$)|^(next$)",
+
+    // Core libs first
+    "^(react|react-dom)(/.*)?$",
+    "^next(/.*)?$",
+
     "<THIRD_PARTY_MODULES>",
     "",
+
+    // Monorepo / workspace packages
     "^@workspace/(.*)$",
     "",
+
+    // Local aliases (types first)
     "^types$",
-    "^@/types/(.*)$",
-    "^@/config/(.*)$",
-    "^@/lib/(.*)$",
-    "^@/hooks/(.*)$",
+    "^@/types(/.*)?$",
+    "^@/(db|config|emails|lib|hooks)/(.*)$",
     "^@/components/ui/(.*)$",
     "^@/components/(.*)$",
-    "^@/registry/(.*)$",
-    "^@/styles/(.*)$",
-    "^@/app/(.*)$",
-    "^@/www/(.*)$",
+    "^@/(registry|styles|app|www)/(.*)$",
     "",
+
+    // Relative imports
     "^[./]",
+
+    // Side-effect styles last (optional but handy)
+    "",
+    "^.+\\.(css|scss|sass)$",
   ],
-  // Supported options for @ianvs
+
+  // @ianvs options
   importOrderParserPlugins: ["typescript", "jsx", "decorators-legacy"],
   importOrderCaseSensitive: false,
-  // if you use side-effect imports that must never move, list them here:
+  importOrderSortSpecifiers: true,
+  importOrderCombineTypeAndValueImports: true,
+  importOrderGroupNamespaceSpecifiers: true,
   // importOrderSafeSideEffects: ['**/polyfills.ts'],
 
-  plugins: [sortImports, "prettier-plugin-tailwindcss"],
+  plugins: [sortImports, "prettier-plugin-tailwindcss"], // keep Tailwind plugin last
 }
 
 export default prettierConfig
