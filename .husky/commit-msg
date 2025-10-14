@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
+
 # $1 is the path to the commit message file
 node scripts/auto-version-from-msg.mjs "$1"
