@@ -89,7 +89,6 @@ export const SignInForm = () => {
     if (!canWebAuthn) return
 
     // experimental helper in some browsers
-    // @ts-expect-error experimental
     const isConditional = window.PublicKeyCredential?.isConditionalMediationAvailable
 
     ;(async () => {
