@@ -22,6 +22,20 @@
       "when": 1760469067693,
       "tag": "0002_elite_shocker",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1760480750568,
+      "tag": "0003_neat_gorilla_man",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1760481479848,
+      "tag": "0004_peaceful_speed",
+      "breakpoints": true
     }
   ]
 }

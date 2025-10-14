@@ -1,0 +1,1 @@
+ALTER TABLE "pages" ALTER COLUMN "description" DROP DEFAULT;
