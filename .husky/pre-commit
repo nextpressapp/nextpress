@@ -5,7 +5,7 @@ yarn lint-staged
 if git diff -U0 --cached --exit-code package.json | grep -qE '"version"'; then
   if [ -z "$ALLOW_VERSION_BUMP" ]; then
     echo "ERROR: Modifying the 'version' field in package.json is not allowed."
-    echo "Use 'yarn version:auto' or let the pre-push hook bump it for you."
+    echo "Use 'yarn version:patch', 'yarn version:minor' or let the commit hooks bump it for you."
     exit 1
   fi
 fi

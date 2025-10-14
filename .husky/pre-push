@@ -1,43 +1,6 @@
 #!/usr/bin/env bash
-set -euo pipefail
+. "$(dirname "$0")/_/husky.sh"
 
 echo "Running typecheck and prettier:check before push..."
 yarn typecheck
 yarn prettier:check
-
-# Run auto-version; it exits 10 when a bump happened.
-set +e
-node scripts/auto-version.mjs >/dev/null 2>&1
-BUMP_EXIT=$?
-set -e
-
-if [ "$BUMP_EXIT" -eq 10 ]; then
-  V=$(node -p "require('./package.json').version")
-  echo "Version bumped to v$V. Pushing release commit and tag..."
-
-  # Ensure we have an upstream; set it on first push
-  UPSTREAM=$(git rev-parse --abbrev-ref --symbolic-full-name @{u} 2>/dev/null || true)
-  if [ -z "$UPSTREAM" ]; then
-    REMOTE="$(git remote | head -n1)"
-    if [ -z "$REMOTE" ]; then
-      echo "No git remote configured; please add a remote and push manually:"
-      echo "  git remote add origin <url>"
-      echo "  git push -u origin --follow-tags"
-      exit 1
-    fi
-    git push --no-verify -u "$REMOTE" HEAD --follow-tags
-  else
-    git push --no-verify --follow-tags
-  fi
-
-  echo "✅ Release commit and tag pushed."
-  echo "ℹ️  Skipping the original push to avoid ref race."
-  # IMPORTANT: abort the outer push so it won't try again
-  exit 1
-elif [ "$BUMP_EXIT" -ne 0 ]; then
-  echo "auto-version failed (exit $BUMP_EXIT)."
-  exit $BUMP_EXIT
-fi
-
-# No bump, continue normal push
-exit 0

@@ -1,6 +1,6 @@
 {
   "name": "nextpress",
-  "version": "2.1.2",
+  "version": "2.1.4",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
@@ -12,7 +12,8 @@
     "prettier:check": "prettier \"**/*.{ts,tsx,js,jsx,css,md,mdx,json}\" --check",
     "prettier:write": "prettier \"**/*.{ts,tsx,js,jsx,css,md,mdx,json}\" --write",
     "prettier:debug": "prettier \"**/*.{ts,tsx,js,jsx,json,css,md,mdx}\" --check --log-level debug",
-    "version:auto": "node scripts/auto-version.mjs",
+    "version:patch": "npm version patch -m \"chore(release): v%s\"",
+    "version:minor": "npm version minor -m \"chore(release): v%s\"",
     "prepare": "husky",
     "db:gen": "drizzle-kit generate",
     "db:mig": "drizzle-kit migrate"
