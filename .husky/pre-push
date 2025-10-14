@@ -1,3 +1,18 @@
+#!/usr/bin/env bash
 echo "Running typecheck and prettier:check before push..."
-yarn typecheck
-yarn prettier:check
+yarn typecheck || exit $?
+yarn prettier:check || exit $?
+
+# Attempt an automatic version bump based on conventional commits since last tag
+echo "Checking if version bump is needed..."
+yarn version:auto
+BUMP_EXIT=$?
+
+# Exit code 10 means "bumped"; abort current push so the new commit+tag can be pushed explicitly.
+if [ $BUMP_EXIT -eq 10 ]; then
+  echo "Version bumped and tagged. Please push again."
+  exit 1
+fi
+
+# 0 means "no bump needed"; 1+ means error
+exit $BUMP_EXIT
