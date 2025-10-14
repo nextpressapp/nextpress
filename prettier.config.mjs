@@ -1,8 +1,6 @@
 // prettier.config.mjs
-import sortImports from "@ianvs/prettier-plugin-sort-imports"
-
 /** @type {import('prettier').Config} */
-const prettierConfig = {
+export default {
   endOfLine: "lf",
   semi: false,
   singleQuote: false,
@@ -12,19 +10,12 @@ const prettierConfig = {
 
   importOrder: [
     "<BUILTIN_MODULES>",
-
-    // Core libs first
     "^(react|react-dom)(/.*)?$",
     "^next(/.*)?$",
-
     "<THIRD_PARTY_MODULES>",
     "",
-
-    // Monorepo / workspace packages
     "^@workspace/(.*)$",
     "",
-
-    // Local aliases (types first)
     "^types$",
     "^@/types(/.*)?$",
     "@/db",
@@ -33,24 +24,16 @@ const prettierConfig = {
     "^@/components/(.*)$",
     "^@/(registry|styles|app|www)/(.*)$",
     "",
-
-    // Relative imports
     "^[./]",
-
-    // Side-effect styles last (optional but handy)
     "",
     "^.+\\.(css|scss|sass)$",
   ],
 
-  // @ianvs options
+  // IanVS plugin options
   importOrderParserPlugins: ["typescript", "jsx", "decorators-legacy"],
   importOrderCaseSensitive: false,
-  importOrderSortSpecifiers: true,
-  importOrderCombineTypeAndValueImports: true,
-  importOrderGroupNamespaceSpecifiers: true,
-  // importOrderSafeSideEffects: ['**/polyfills.ts'],
+  importOrderTypeScriptVersion: "5.6.0", // <-- set to your actual TS version
 
-  plugins: [sortImports, "prettier-plugin-tailwindcss"], // keep Tailwind plugin last
+  // Keep Tailwind last
+  plugins: ["@ianvs/prettier-plugin-sort-imports", "prettier-plugin-tailwindcss"],
 }
-
-export default prettierConfig
