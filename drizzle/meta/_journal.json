@@ -15,6 +15,13 @@
       "when": 1760404146382,
       "tag": "0001_milky_vermin",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1760469067693,
+      "tag": "0002_elite_shocker",
+      "breakpoints": true
     }
   ]
 }

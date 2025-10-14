@@ -262,3 +262,14 @@ export const userRelations = relations(user, ({ many }) => ({
   // passkeys: many(passkey),<= handled by better-auth
   // twoFactors: many(twoFactor),<= handled by better-auth
 }))
+
+export const siteSettings = pgTable("site_settings", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  siteName: text("site_name").notNull(),
+  description: text("description").notNull(),
+  homeTitle: text("home_title").notNull(),
+  homeDescription: text("home_description").notNull(),
+  aboutTitle: text("about_title").notNull(),
+  aboutDescription: text("about_description").notNull(),
+  ...timestamps,
+})
