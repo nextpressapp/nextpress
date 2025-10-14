@@ -1,18 +1,51 @@
 #!/usr/bin/env bash
+set -euo pipefail
+
 echo "Running typecheck and prettier:check before push..."
-yarn typecheck || exit $?
-yarn prettier:check || exit $?
+yarn typecheck
+yarn prettier:check
 
-# Attempt an automatic version bump based on conventional commits since last tag
-echo "Checking if version bump is needed..."
-yarn version:auto
+# Run auto-version quietly; it exits 10 when a bump occurred.
+set +e
+node scripts/auto-version.mjs >/dev/null 2>&1
 BUMP_EXIT=$?
+set -e
 
-# Exit code 10 means "bumped"; abort current push so the new commit+tag can be pushed explicitly.
-if [ $BUMP_EXIT -eq 10 ]; then
-  echo "Version bumped and tagged. Please push again."
-  exit 1
+if [ "$BUMP_EXIT" -eq 10 ]; then
+  V=$(node -p "require('./package.json').version")
+  echo "Version bumped to v$V. Pushing release commit and tag..."
+
+  # If no upstream is configured (first push), set one.
+  UPSTREAM=$(git rev-parse --abbrev-ref --symbolic-full-name @{u} 2>/dev/null || true)
+  if [ -z "$UPSTREAM" ]; then
+    # pick 'origin' if it exists; otherwise first remote; else error
+    REMOTE="$(git remote | head -n1)"
+    if [ -z "$REMOTE" ]; then
+      echo "No git remote configured; please add a remote and push manually:"
+      echo "  git remote add origin <url>"
+      echo "  git push -u origin --follow-tags"
+      exit 1
+    fi
+    # Push commit + tags and set upstream; --no-verify avoids hook recursion.
+    if ! git push --no-verify -u "$REMOTE" HEAD --follow-tags; then
+      echo "Auto-push failed. Run manually: git push -u $REMOTE HEAD --follow-tags"
+      exit 1
+    fi
+  else
+    # Upstream exists: push commit + tags. --no-verify avoids re-entering hooks.
+    if ! git push --no-verify --follow-tags; then
+      echo "Auto-push failed. Run manually: git push --follow-tags"
+      exit 1
+    fi
+  fi
+
+  echo "Release commit and tag pushed."
+  # Let the original push continue (it’ll find everything up to date)
+  exit 0
+elif [ "$BUMP_EXIT" -ne 0 ]; then
+  echo "auto-version failed (exit $BUMP_EXIT)."
+  exit $BUMP_EXIT
 fi
 
-# 0 means "no bump needed"; 1+ means error
-exit $BUMP_EXIT
+# No bump needed; continue normal push
+exit 0
