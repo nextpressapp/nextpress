@@ -1,10 +1,10 @@
 "use client"
 
-import { useReducer, useState } from "react"
+import { useEffect, useReducer, useRef, useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Check, EyeIcon, EyeOffIcon } from "lucide-react"
+import { Check, EyeIcon, EyeOffIcon, Fingerprint, Loader2 } from "lucide-react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { z } from "zod"
@@ -59,10 +59,16 @@ export const SignInForm = () => {
   const [seePassword, toggleSeePassword] = useReducer((state) => !state, false)
   const [isPending, setIsPending] = useState(false)
 
+  // Passkey state
+  const [pkPending, setPkPending] = useState(false)
+
   // 2FA dialog state
   const [showMfa, setShowMfa] = useState(false)
   const [verifying, setVerifying] = useState(false)
   const [verified, setVerified] = useState(false)
+
+  // ensure conditional UI runs only once per mount
+  const triedAutofillRef = useRef(false)
 
   const form = useForm<TSignIn>({
     resolver: zodResolver(signInSchema),
@@ -74,25 +80,49 @@ export const SignInForm = () => {
     defaultValues: { code: "", trustDevice: true },
   })
 
+  // ---------- PASSKEY: Conditional UI (autofill) ----------
+  useEffect(() => {
+    if (triedAutofillRef.current) return
+    triedAutofillRef.current = true
+
+    const canWebAuthn = typeof window !== "undefined" && "PublicKeyCredential" in window
+    if (!canWebAuthn) return
+
+    // experimental helper in some browsers
+    // @ts-expect-error experimental
+    const isConditional = window.PublicKeyCredential?.isConditionalMediationAvailable
+
+    ;(async () => {
+      try {
+        if (!isConditional || (await isConditional())) {
+          // Important: no callbackURL here; we'll redirect only if success
+          const res = await authClient.signIn.passkey({ autoFill: true })
+          if (res && !res.error) {
+            // success -> go to dashboard
+            window.location.href = "/dashboard"
+          }
+          // on error or cancel -> stay on page; do nothing
+        }
+      } catch {
+        // NotAllowed/cancel during autofill: ignore silently
+      }
+    })()
+  }, [])
+
+  // ---------- EMAIL + PASSWORD ----------
   const onSubmit = async (values: TSignIn) => {
     await authClient.signIn.email(
-      {
-        email: values.email,
-        password: values.password,
-        // Better Auth will use this after the flow completes
-        callbackURL: "/",
-      },
+      { email: values.email, password: values.password, callbackURL: "/dashboard" },
       {
         onRequest: () => setIsPending(true),
         onResponse: () => setIsPending(false),
         onSuccess: async (ctx) => {
-          // If user has 2FA enabled, Better Auth reports it here
           if ((ctx?.data as any)?.twoFactorRedirect) {
             setShowMfa(true)
-            // don't redirect yet; finish TOTP first
             return
           }
           toast.success("Welcome to NextPress")
+          // callbackURL will navigate; the refresh below is a no-op if we've already moved
           router.refresh()
         },
         onError: async (ctx) => {
@@ -102,6 +132,37 @@ export const SignInForm = () => {
     )
   }
 
+  // ---------- PASSKEY: Button flow (forced sheet) ----------
+  const signInWithPasskey = async () => {
+    setPkPending(true)
+    try {
+      const res = await authClient.signIn.passkey({
+        autoFill: false, // force the platform sheet
+      })
+      if (res?.error) throw new Error(res.error.message)
+
+      toast.success("Signed in with passkey")
+      window.location.href = "/dashboard"
+    } catch (e: any) {
+      const name = e?.name || ""
+      const msg = e?.message || ""
+      if (name === "NotAllowedError") {
+        toast.error("No matching passkey found or request was cancelled.")
+      } else if (name === "InvalidStateError") {
+        toast.error("This passkey can’t be used here. Try another or re-register it.")
+      } else if (name === "SecurityError") {
+        toast.error("Security error. Check domain and HTTPS (localhost is allowed).")
+      } else {
+        toast.error(msg || "Passkey sign-in failed")
+      }
+
+      console.error("webauthn signin error:", e)
+    } finally {
+      setPkPending(false)
+    }
+  }
+
+  // ---------- 2FA VERIFY ----------
   const verifyTotp = async (values: TTOTP) => {
     setVerifying(true)
     try {
@@ -118,8 +179,7 @@ export const SignInForm = () => {
       setVerified(true)
       toast.success("Two-factor verified. Signing you in…")
       setShowMfa(false)
-      router.replace("/") // or use ctx.redirectURL if you store it
-      router.refresh()
+      window.location.href = "/dashboard"
     } catch (e: any) {
       toast.error(e?.message ?? "Invalid code, try again")
     } finally {
@@ -129,12 +189,43 @@ export const SignInForm = () => {
 
   return (
     <div className="bg-background flex min-h-screen items-center justify-center">
+      {/* Hidden input improves Conditional UI matching in Chrome */}
+      <input
+        type="text"
+        name="webauthn-username"
+        autoComplete="username webauthn"
+        className="sr-only"
+      />
+
       <Card>
         <CardHeader className="items-center justify-center">
           <CardTitle>Login</CardTitle>
-          <CardDescription>Enter your credentials to access your account</CardDescription>
+          <CardDescription>Use a passkey or your password to access your account</CardDescription>
         </CardHeader>
-        <CardContent>
+
+        <CardContent className="space-y-4">
+          {/* Passkey button */}
+          <Button
+            className="w-full"
+            variant="outline"
+            onClick={signInWithPasskey}
+            disabled={pkPending}
+          >
+            {pkPending ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Checking…
+              </>
+            ) : (
+              <>
+                <Fingerprint className="mr-2 h-4 w-4" />
+                Continue with Passkey
+              </>
+            )}
+          </Button>
+
+          <div className="text-muted-foreground text-center text-xs">or</div>
+
+          {/* Email + password */}
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
               <FormField
@@ -206,6 +297,7 @@ export const SignInForm = () => {
             </form>
           </Form>
         </CardContent>
+
         <CardFooter>
           <p className="text-muted-foreground text-sm">
             Don&#39;t have an account?{" "}
@@ -216,7 +308,7 @@ export const SignInForm = () => {
         </CardFooter>
       </Card>
 
-      {/* MFA dialog */}
+      {/* MFA dialog (for password-based sign-in when 2FA is enabled) */}
       <Dialog open={showMfa} onOpenChange={setShowMfa}>
         <DialogContent className="sm:max-w-sm">
           <DialogHeader>

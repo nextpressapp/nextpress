@@ -1,10 +1,11 @@
-import { db } from "@/db"
 import { betterAuth } from "better-auth"
 import { drizzleAdapter } from "better-auth/adapters/drizzle"
 import { nextCookies } from "better-auth/next-js"
 import { admin, haveIBeenPwned, openAPI, twoFactor } from "better-auth/plugins"
+import { passkey } from "better-auth/plugins/passkey"
 import { sql } from "drizzle-orm"
 
+import { db } from "@/db"
 import * as schema from "@/db/schema"
 import { renderEmail } from "@/emails/lib/render=email"
 import DeleteAccountVerificationEmail from "@/emails/templates/delete-account-verification-email"
@@ -98,6 +99,11 @@ export const auth = betterAuth({
       customPasswordCompromisedMessage: "Please choose a more secure password.",
     }),
     openAPI(),
+    passkey({
+      rpID: "localhost",
+      rpName: "NextPress",
+      origin: "http://localhost:3000",
+    }),
     twoFactor(),
     nextCookies(),
   ],

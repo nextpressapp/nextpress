@@ -5,6 +5,7 @@ import { redirect } from "next/navigation"
 import { auth } from "@/lib/auth"
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import { DashboardSidebar } from "@/components/dashboard-sidebar"
+import { ImpersonationBanner } from "@/components/impersonation-banner"
 
 export default async function DashboardLayout({ children }: { children: ReactNode }) {
   const session = await auth.api.getSession({ headers: await headers() })
@@ -16,8 +17,11 @@ export default async function DashboardLayout({ children }: { children: ReactNod
       <SidebarProvider>
         <DashboardSidebar role={role} userName={session.user?.name ?? "User"} />
         <main className="min-w-0 flex-1">
-          <header className="bg-background/80 sticky top-0 z-10 border-b backdrop-blur">
-            <SidebarTrigger />
+          <header className="sticky top-0 z-20">
+            <ImpersonationBanner />
+            <div className="bg-background/80 border-b backdrop-blur">
+              <SidebarTrigger />
+            </div>
           </header>
           <div className="p-4">{children}</div>
         </main>

@@ -27,6 +27,7 @@ const prettierConfig = {
     // Local aliases (types first)
     "^types$",
     "^@/types(/.*)?$",
+    "@/db",
     "^@/(db|config|emails|lib|hooks)/(.*)$",
     "^@/components/ui/(.*)$",
     "^@/components/(.*)$",
