@@ -19,9 +19,6 @@ export default async function DashboardPage() {
 
   return (
     <div className="mx-auto w-full max-w-6xl min-w-0">
-      <div>
-        <pre>{JSON.stringify(session, null, 2)}</pre>
-      </div>
       <h1 className="mb-8 text-3xl font-bold">Dashboard</h1>
 
       {/* Profile */}

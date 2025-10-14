@@ -1,6 +1,6 @@
 // prettier.config.mjs
 /** @type {import('prettier').Config} */
-export default {
+const prettierConfig = {
   endOfLine: "lf",
   semi: false,
   singleQuote: false,
@@ -37,3 +37,5 @@ export default {
   // Keep Tailwind last
   plugins: ["@ianvs/prettier-plugin-sort-imports", "prettier-plugin-tailwindcss"],
 }
+
+export default prettierConfig

@@ -88,7 +88,7 @@ type TEdit = z.infer<typeof editSchema>
 
 const banSchema = z.object({
   reason: z.string().min(1, "Please provide a reason"),
-  days: z.number("Days must be a number").int().min(0).max(365).default(0),
+  days: z.number("Days must be a number").int().min(0).max(365),
 })
 type TBan = z.infer<typeof banSchema>
 
@@ -168,12 +168,46 @@ export const AdminDashboard = ({ stats, users }: { stats: Stats; users: UserRow[
   const submitEdit = async (values: TEdit) => {
     if (!selected) return
     setBusyId(selected.id)
+
+    // Normalize empties so comparisons are stable
+    const prevRole = (selected.role ?? "user") as TEdit["role"]
+    const nextRole = values.role
+    const roleChanged = nextRole !== prevRole
+
+    const prevName = selected.name ?? ""
+    const nextName = values.name ?? ""
+    const nameChanged = nextName !== prevName
+
     try {
-      const res = await authClient.admin.updateUser({ id: selected.id, ...values } as any)
-      if (res?.error) throw new Error(res.error.message)
-      toast.success("User updated")
+      // 1) Update role if changed
+      if (roleChanged) {
+        const r = await authClient.admin.setRole({
+          userId: selected.id,
+          role: nextRole,
+        } as any)
+        if (r?.error) throw new Error(r.error.message)
+      }
+
+      // 2) Update other fields (name) if changed
+      if (nameChanged) {
+        const r2 = await authClient.admin.updateUser({
+          id: selected.id,
+          name: nextName,
+        } as any)
+        if (r2?.error) throw new Error(r2.error.message)
+      }
+
+      if (!roleChanged && !nameChanged) {
+        toast.message("No changes to save")
+      } else {
+        toast.success("User updated")
+        // Optimistic table update
+        setRows((prev) =>
+          prev.map((r) => (r.id === selected.id ? { ...r, name: nextName, role: nextRole } : r))
+        )
+      }
+
       setOpenEdit(false)
-      setRows((prev) => prev.map((r) => (r.id === selected.id ? { ...r, ...values } : r)))
     } catch (e: any) {
       toast.error(e?.message ?? "Could not update user")
     } finally {
@@ -230,7 +264,7 @@ export const AdminDashboard = ({ stats, users }: { stats: Stats; users: UserRow[
   const clickUnban = async (user: UserRow) => {
     setBusyId(user.id)
     try {
-      const res = await authClient.admin.users.unban({ id: user.id } as any)
+      const res = await authClient.admin.unbanUser({ id: user.id } as any)
       if (res?.error) throw new Error(res.error.message)
       toast.success("User unbanned")
       setRows((prev) =>
@@ -251,7 +285,7 @@ export const AdminDashboard = ({ stats, users }: { stats: Stats; users: UserRow[
       if (res?.error) throw new Error(res.error.message)
       toast.success("Impersonation started")
       // Usually you want to bounce to the app home (or user detail)
-      window.location.href = "/"
+      window.location.href = "/dashboard"
     } catch (e: any) {
       toast.error(e?.message ?? "Could not impersonate user")
     }

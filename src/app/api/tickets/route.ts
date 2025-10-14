@@ -1,42 +1,31 @@
-import { headers } from "next/headers"
 import { NextResponse } from "next/server"
 
 import { db } from "@/db"
 import { comments, tickets } from "@/db/schema"
-import { auth } from "@/lib/auth"
+import { perm, withPermission } from "@/lib/authz"
 import { ticketSchema } from "@/lib/validators/ticket"
 
-export async function POST(request: Request) {
-  const session = await auth.api.getSession({ headers: await headers() })
-  if (!session) {
-    return NextResponse.json({ error: "Not authorized" }, { status: 403 })
+export const POST = withPermission(perm("ticket", "create"), async ({ req, session }) => {
+  const json = await req.json()
+  const parsed = ticketSchema.safeParse(json)
+
+  if (!parsed.success) {
+    // ✅ new overload: map issues -> message (no deprecated signature)
+    const flat = parsed.error.flatten((issue) => issue.message)
+    return NextResponse.json(
+      { error: { formErrors: flat.formErrors, fieldErrors: flat.fieldErrors } },
+      { status: 400 }
+    )
   }
 
-  const ok = await auth.api.userHasPermission({
-    body: { permissions: { ticket: ["create"] } },
-  })
-  if (!ok) return new NextResponse("Forbidden", { status: 403 })
-
-  const json = await request.json()
-  const parse = ticketSchema.safeParse(json)
-  if (!parse.success) {
-    return NextResponse.json({ error: parse.error.flatten() }, { status: 400 })
-  }
-  const { title, description, priority } = parse.data
+  const { title, description, priority } = parsed.data
 
   const created = await db.transaction(async (trx) => {
-    // create ticket and get the inserted row
     const [t] = await trx
       .insert(tickets)
-      .values({
-        title,
-        description,
-        priority, // enum already matches (e.g. "MEDIUM")
-        createdById: session.user.id,
-      })
+      .values({ title, description, priority, createdById: session.user.id })
       .returning()
 
-    // Create an initial comment; skip this block if you don’t want one.
     await trx.insert(comments).values({
       content: description,
       userId: session.user.id,
@@ -46,10 +35,7 @@ export async function POST(request: Request) {
     const full = await trx.query.tickets.findFirst({
       where: (tbl, { eq }) => eq(tbl.id, t.id),
       with: {
-        comments: {
-          with: { author: true }, // ← matches your `commentRelations`
-          orderBy: (c, { desc }) => [desc(c.createdAt)],
-        },
+        comments: { with: { author: true }, orderBy: (c, { desc }) => [desc(c.createdAt)] },
         createdBy: true,
       },
     })
@@ -58,4 +44,4 @@ export async function POST(request: Request) {
   })
 
   return NextResponse.json(created, { status: 201 })
-}
+})
