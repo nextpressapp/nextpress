@@ -1,3 +1,4 @@
+import { Metadata } from "next"
 import { unstable_cache as cache } from "next/cache"
 import dynamic from "next/dynamic"
 
@@ -18,7 +19,11 @@ const getPage = cache(
   { tags: ["pages"] }
 )
 
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>
+}): Promise<Metadata> {
   const { slug } = await params
   const page = await getPage(slug)
   if (!page) return {}

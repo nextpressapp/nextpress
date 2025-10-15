@@ -268,9 +268,5 @@ export const siteSettings = pgTable("site_settings", {
   id: uuid("id").primaryKey().defaultRandom(),
   siteName: text("site_name").notNull(),
   description: text("description").notNull(),
-  homeTitle: text("home_title").notNull(),
-  homeDescription: text("home_description").notNull(),
-  aboutTitle: text("about_title").notNull(),
-  aboutDescription: text("about_description").notNull(),
   ...timestamps,
 })

@@ -63,9 +63,11 @@ const supportItems = [{ title: "Dashboard", url: "/support", icon: BadgeHelp }]
 export function DashboardSidebar({
   role,
   userName,
+  siteName,
 }: {
   role: "admin" | "manager" | "editor" | "support" | string | null
   userName: string
+  siteName: string
 }) {
   const router = useRouter()
 
@@ -86,7 +88,7 @@ export function DashboardSidebar({
       <SidebarContent>
         <SidebarGroup className="space-y-4">
           <SidebarGroupLabel className="text-2xl font-bold">
-            <Logo />
+            <Logo siteName={siteName} />
           </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>

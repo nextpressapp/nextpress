@@ -1,4 +1,3 @@
-// app/api/manager/settings/route.ts
 import { NextResponse } from "next/server"
 import { eq } from "drizzle-orm"
 import { z } from "zod"
@@ -11,10 +10,6 @@ const settingsSchema = z.object({
   id: z.string().optional(),
   siteName: z.string().min(1),
   description: z.string().min(1),
-  homeTitle: z.string().min(1),
-  homeDescription: z.string().min(1),
-  aboutTitle: z.string().min(1),
-  aboutDescription: z.string().min(1),
 })
 
 // Zod error helper (non-deprecated shape)
@@ -47,11 +42,6 @@ export const POST = withPermission(perm("manager.settings", "write"), async ({ r
       .set({
         siteName: data.siteName,
         description: data.description,
-        homeTitle: data.homeTitle,
-        homeDescription: data.homeDescription,
-        aboutTitle: data.aboutTitle,
-        aboutDescription: data.aboutDescription,
-        updatedAt: new Date(),
       })
       .where(eq(siteSettings.id, data.id))
       .returning()
@@ -68,11 +58,6 @@ export const POST = withPermission(perm("manager.settings", "write"), async ({ r
       .set({
         siteName: data.siteName,
         description: data.description,
-        homeTitle: data.homeTitle,
-        homeDescription: data.homeDescription,
-        aboutTitle: data.aboutTitle,
-        aboutDescription: data.aboutDescription,
-        updatedAt: new Date(),
       })
       .where(eq(siteSettings.id, existing[0].id))
       .returning()
@@ -84,10 +69,6 @@ export const POST = withPermission(perm("manager.settings", "write"), async ({ r
     .values({
       siteName: data.siteName,
       description: data.description,
-      homeTitle: data.homeTitle,
-      homeDescription: data.homeDescription,
-      aboutTitle: data.aboutTitle,
-      aboutDescription: data.aboutDescription,
     })
     .returning()
 

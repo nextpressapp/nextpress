@@ -1,6 +1,6 @@
-// components/manager/settings-form.tsx
 "use client"
 
+import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
@@ -22,32 +22,21 @@ interface SiteSettings {
   id?: string
   siteName: string
   description: string
-  homeTitle: string
-  homeDescription: string
-  aboutTitle: string
-  aboutDescription: string
 }
 
 const formSchema = z.object({
   id: z.string().optional(),
   siteName: z.string().min(1, { message: "Site name is required" }),
   description: z.string().min(1, { message: "Description is required" }),
-  homeTitle: z.string().min(1, { message: "Home page title is required" }),
-  homeDescription: z.string().min(1, { message: "Home page description is required" }),
-  aboutTitle: z.string().min(1, { message: "About page title is required" }),
-  aboutDescription: z.string().min(1, { message: "About page description is required" }),
 })
 
 type FormValues = z.infer<typeof formSchema>
 
 export const SettingsForm = ({ settings }: { settings?: SiteSettings }) => {
+  const router = useRouter()
   const initial: SiteSettings = settings ?? {
     siteName: "NextPress",
     description: "A Next.js powered CMS",
-    homeTitle: "Welcome to NextPress",
-    homeDescription: "Your next-generation CMS",
-    aboutTitle: "About NextPress",
-    aboutDescription: "Learn more about our platform",
   }
 
   const form = useForm<FormValues>({
@@ -78,6 +67,8 @@ export const SettingsForm = ({ settings }: { settings?: SiteSettings }) => {
       toast.error("Error", {
         description: e?.message ?? "Error updating settings",
       })
+    } finally {
+      router.refresh()
     }
   }
 
@@ -118,62 +109,6 @@ export const SettingsForm = ({ settings }: { settings?: SiteSettings }) => {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Site Description</FormLabel>
-                    <FormControl>
-                      <Input {...field} disabled={submitting} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="homeTitle"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Home Page Title</FormLabel>
-                    <FormControl>
-                      <Input {...field} disabled={submitting} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="homeDescription"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Home Page Description</FormLabel>
-                    <FormControl>
-                      <Input {...field} disabled={submitting} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="aboutTitle"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>About Page Title</FormLabel>
-                    <FormControl>
-                      <Input {...field} disabled={submitting} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="aboutDescription"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>About Page Description</FormLabel>
                     <FormControl>
                       <Input {...field} disabled={submitting} />
                     </FormControl>
