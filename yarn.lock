@@ -3636,7 +3636,12 @@ concat-map@0.0.1:
   resolved "https://registry.yarnpkg.com/concat-map/-/concat-map-0.0.1.tgz#d8a96bd77fd68df7793a73036a3ba0d5405d477b"
   integrity sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==
 
-content-tag@4.0.0, content-tag@^4.0.0:
+content-tag@4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/content-tag/-/content-tag-4.1.0.tgz#8dd814e2afac2074a701b47566a7ff7a3258caf4"
+  integrity sha512-On6gUuvI1l5MScHO+Xbwjeq1Pk9H6HOipDWkzqGGUGmKpq6K5TRmQuCl1LGSHbdIo2l+lSsgLKrLgCl5kKYA+A==
+
+content-tag@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/content-tag/-/content-tag-4.0.0.tgz#22336e58901488389c3f8c307ed0f2059c678f07"
   integrity sha512-qqJiY9nueYAI396MOmfOk+w/0KL6ERKxANQcSKcR0CrNTc38yT//b73l+WHr9brZx57bFHNaW7a/6Yll0bn95w==
