@@ -79,44 +79,44 @@
     "@babel/helper-string-parser" "^7.29.7"
     "@babel/helper-validator-identifier" "^7.29.7"
 
-"@better-auth/core@1.6.14":
-  version "1.6.14"
-  resolved "https://registry.yarnpkg.com/@better-auth/core/-/core-1.6.14.tgz#67fb6f5019292e11b8945c91033b05bffc39b96c"
-  integrity sha512-12cA7tnR4Wyb3nLpPmeq/Id7QNB+4OhjbzuX7sIhqglgXGjyT5iiNpe2lx/8FF532sHC450Yx1850salCYbkzw==
+"@better-auth/core@1.6.18":
+  version "1.6.18"
+  resolved "https://registry.yarnpkg.com/@better-auth/core/-/core-1.6.18.tgz#a9e7d5582ab51206a410a534b319f009ebd78ba5"
+  integrity sha512-mlPZBKHY6gZdJtuY6LiuKjN2r8AWu0LCss7CEnI0xMbE9D7Sw6WofwPPwiMm+0Hi0QBKIaZGYRmR7/WasbOs+Q==
   dependencies:
     "@opentelemetry/semantic-conventions" "^1.39.0"
     "@standard-schema/spec" "^1.1.0"
     zod "^4.3.6"
 
-"@better-auth/drizzle-adapter@1.6.14":
-  version "1.6.14"
-  resolved "https://registry.yarnpkg.com/@better-auth/drizzle-adapter/-/drizzle-adapter-1.6.14.tgz#7cebdf6d0cc95848ef80dd84186990764f33378e"
-  integrity sha512-lYs1jDudriKYMXNcLFLAvEvOEKbeKBFdDciG4H8qZhV+3+yghGC3f/H5qtgTDc8mGBPV+2tEvVgYqReurOSmNw==
+"@better-auth/drizzle-adapter@1.6.18":
+  version "1.6.18"
+  resolved "https://registry.yarnpkg.com/@better-auth/drizzle-adapter/-/drizzle-adapter-1.6.18.tgz#b079c8213a0818aac37d765824320fc1ddd1515b"
+  integrity sha512-VFcW2YMLZt0YAD0hy6BcMkjPh4Rh9khV71jnV2uL3udqz599Z1P4PiuWO6XZLELTvb/bbAUnxS5ZnyXQwFDAPQ==
 
-"@better-auth/kysely-adapter@1.6.14":
-  version "1.6.14"
-  resolved "https://registry.yarnpkg.com/@better-auth/kysely-adapter/-/kysely-adapter-1.6.14.tgz#1c884cedc3446efdc9a2bea099a352ce941ffabb"
-  integrity sha512-A2+381gYADuZpgd98XQ39bnxLzbT03wnnDmSQIXp7XcE3hF093mGMk6rxlAhENVHH7JL2B0Tv2la2o6n+6ppyQ==
+"@better-auth/kysely-adapter@1.6.18":
+  version "1.6.18"
+  resolved "https://registry.yarnpkg.com/@better-auth/kysely-adapter/-/kysely-adapter-1.6.18.tgz#6bcf85c612d4014513464cb555cd81c5b6d75f4c"
+  integrity sha512-7Q9+LYWiVD8t3nrxN/fPqZOgUQFcVh+KUo95CDj2+Hfnf4GCb6/ZsQrEnBXBgplwBQbUOYN58Lp/uevb6ugwFQ==
 
-"@better-auth/memory-adapter@1.6.14":
-  version "1.6.14"
-  resolved "https://registry.yarnpkg.com/@better-auth/memory-adapter/-/memory-adapter-1.6.14.tgz#8d1490aaea5ce44e59190642efaa521d15bc6f49"
-  integrity sha512-frtBTozi8qsBlypxp33dkiIZT2IOMvix3oh2qTTcBkK11ISsRSTUUadl7DbwXri2AEoooShsH6PSAput920J3Q==
+"@better-auth/memory-adapter@1.6.18":
+  version "1.6.18"
+  resolved "https://registry.yarnpkg.com/@better-auth/memory-adapter/-/memory-adapter-1.6.18.tgz#1227583d05a74c9f3c70d64e61e315a84396a661"
+  integrity sha512-jHulNRsA0OGKAACmsCNfAbH2z0NEoLQCLdZTU6Pvqn/Cd+xh7aFz0oys69KyKZp2r30QUjuEG9FrrqS8ASWDiw==
 
-"@better-auth/mongo-adapter@1.6.14":
-  version "1.6.14"
-  resolved "https://registry.yarnpkg.com/@better-auth/mongo-adapter/-/mongo-adapter-1.6.14.tgz#6467191ad91f0f412b021ac8840f007beb7d01aa"
-  integrity sha512-meaZx712k9c0Cl6urwYZRNa3mAy3/leaYiSNt+hVaCOEPlgTDxzmYMNACvTTYXgh4eCpDVf5G7ZMEYBtejKQdw==
+"@better-auth/mongo-adapter@1.6.18":
+  version "1.6.18"
+  resolved "https://registry.yarnpkg.com/@better-auth/mongo-adapter/-/mongo-adapter-1.6.18.tgz#2c50c4d63cb46266f9cb6b37d443443ea4b72b17"
+  integrity sha512-A6aD3sKsptQl5sBq2wFoLGckEIM5Pa93T//R1DR+erAZOMejZGyaqYaPXWwRk7ZejFOyrftMm98OP0IJsz52gg==
 
-"@better-auth/prisma-adapter@1.6.14":
-  version "1.6.14"
-  resolved "https://registry.yarnpkg.com/@better-auth/prisma-adapter/-/prisma-adapter-1.6.14.tgz#1071bbd43cca501a40820ab33c565305e9a6aa75"
-  integrity sha512-9b9wSqhCthMmOYo0QdX+N/cOv+fNck/JE5CZQuuWwEJl5QeoYhCZesXjts5VfLAPMIf6vKw3QNBrn0SVMXXi2Q==
+"@better-auth/prisma-adapter@1.6.18":
+  version "1.6.18"
+  resolved "https://registry.yarnpkg.com/@better-auth/prisma-adapter/-/prisma-adapter-1.6.18.tgz#bdf940d1f51ad650af449da7cf25a26f18473eb9"
+  integrity sha512-9hJrDYDqGpb53o8BUuB8uunkkeY+nACzYpZr06R8+22zTFS/NL/jLwgUlK3Xf+1VjhBoXAoEBKJ3ghVUGu6jFw==
 
-"@better-auth/telemetry@1.6.14":
-  version "1.6.14"
-  resolved "https://registry.yarnpkg.com/@better-auth/telemetry/-/telemetry-1.6.14.tgz#aeb4f1f0e13bee391b1a853449a24c16f5f25bdc"
-  integrity sha512-ALi3cEx5eyrFY+TeAdhc1uq8FqJyGvzgvIo7GQZOqGqLZxHY9nte44WN++jBFGJJbsW3e4cgLj8dQK291s6wWQ==
+"@better-auth/telemetry@1.6.18":
+  version "1.6.18"
+  resolved "https://registry.yarnpkg.com/@better-auth/telemetry/-/telemetry-1.6.18.tgz#bf34dcaedeee145b9b4aa9fca4b5f58e0307b17f"
+  integrity sha512-C/sWZzDAFrtb8bFs+yLHLYYfk1Yffw2GnKXerxTGO3rHI7qV2Ktf359nAf3IdZr+cC/404fFk4hkDCnQiGCkZA==
 
 "@better-auth/utils@0.4.1", "@better-auth/utils@^0.4.0":
   version "0.4.1"
@@ -125,7 +125,12 @@
   dependencies:
     "@noble/hashes" "^2.0.1"
 
-"@better-fetch/fetch@1.1.21", "@better-fetch/fetch@^1.1.21":
+"@better-fetch/fetch@1.3.0":
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/@better-fetch/fetch/-/fetch-1.3.0.tgz#69718b295ed52952912994406f0a71414373de84"
+  integrity sha512-Lgkl18IrUURFqa1nE38GNDWXf7XGzfxXQDCE/alCQV0yZ98YrPGtlmW61ch1T4YRt3lxrSAGA+Ft73FzuWWb3A==
+
+"@better-fetch/fetch@^1.1.21":
   version "1.1.21"
   resolved "https://registry.yarnpkg.com/@better-fetch/fetch/-/fetch-1.1.21.tgz#2b4990e73c46b0ae5e66b247083610ff8c37bddc"
   integrity sha512-/ImESw0sskqlVR94jB+5+Pxjf+xBwDZF/N5+y2/q4EqD7IARUTSpPfIo8uf39SYpCxyOCtbyYpUrZ3F/k0zT4A==
@@ -2048,17 +2053,17 @@
   dependencies:
     undici-types ">=7.24.0 <7.24.7"
 
-"@types/node@24.13.1":
-  version "24.13.1"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-24.13.1.tgz#890e6a3832959d8181a11c4c91c3a0de8410e697"
-  integrity sha512-RSpUJGmvsJ1ZeBehQZFhIdpsz+bIpES0nIQXko4Ybq+N+kX6XvOq3Jo+iJ82FWLdblFq85AsMikd3m35jgezYg==
+"@types/node@24.13.2":
+  version "24.13.2"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-24.13.2.tgz#3b9b280a7055128359f125eb1067d9a190f39854"
+  integrity sha512-fRa09kZTgu8o71KFcDjUFuc7F+dEbZYZmkI0mg5YBTRs0yMKjYHsq/c0urDKeDb+D5qVgXOdFcuu+DZPKOITwA==
   dependencies:
     undici-types "~7.18.0"
 
-"@types/nodemailer@7.0.11":
-  version "7.0.11"
-  resolved "https://registry.yarnpkg.com/@types/nodemailer/-/nodemailer-7.0.11.tgz#f04f91aac57eb4f2b79600867288bafe61c360d3"
-  integrity sha512-E+U4RzR2dKrx+u3N4DlsmLaDC6mMZOM/TPROxA0UAPiTgI0y4CEFBmZE+coGWTjakDriRsXG368lNk1u9Q0a2g==
+"@types/nodemailer@7.0.12":
+  version "7.0.12"
+  resolved "https://registry.yarnpkg.com/@types/nodemailer/-/nodemailer-7.0.12.tgz#5d65403398edaf05c781f3af6b9fa959ba636dcf"
+  integrity sha512-80vKwiIsVSyFA1rRovH59jNPLBOuc6dRZIHEu40gXTkBkZnQv8vog1xSGEb9j5q/tdMAs5ivvDR2pLTU0hGHXA==
   dependencies:
     "@types/node" "*"
 
@@ -2593,33 +2598,33 @@ balanced-match@^4.0.2:
   resolved "https://registry.yarnpkg.com/balanced-match/-/balanced-match-4.0.4.tgz#bfb10662feed8196a2c62e7c68e17720c274179a"
   integrity sha512-BLrgEcRTwX2o6gGxGOCNyMvGSp35YofuYzw9h1IMTRmKqttAZZVU67bdb9Pr2vUHA8+j3i2tJfjO6C6+4myGTA==
 
-better-auth@^1.6.14:
-  version "1.6.14"
-  resolved "https://registry.yarnpkg.com/better-auth/-/better-auth-1.6.14.tgz#39831c0082071b20608984e36f6dabe377a9b70b"
-  integrity sha512-c0/DvTQGDpgfj1knekCpQrg6PSWGDtfAtP7Ou6FkAhoE3RNnnIxLB5qKj6tRg53a1xsq93G6T68cNxrUZ7ZVmw==
+better-auth@^1.6.16:
+  version "1.6.18"
+  resolved "https://registry.yarnpkg.com/better-auth/-/better-auth-1.6.18.tgz#3dc4da07d9d8da6ec4a6f09cc58f01ae5d82cf83"
+  integrity sha512-6jONqD0gNjE0S6ehhSZhZ7We0rBwjAzbqnQMJQg/zY0387M+agak7VsOAuE78r7Z0Qv7C/KBRKhHSuyJDQ4iLw==
   dependencies:
-    "@better-auth/core" "1.6.14"
-    "@better-auth/drizzle-adapter" "1.6.14"
-    "@better-auth/kysely-adapter" "1.6.14"
-    "@better-auth/memory-adapter" "1.6.14"
-    "@better-auth/mongo-adapter" "1.6.14"
-    "@better-auth/prisma-adapter" "1.6.14"
-    "@better-auth/telemetry" "1.6.14"
+    "@better-auth/core" "1.6.18"
+    "@better-auth/drizzle-adapter" "1.6.18"
+    "@better-auth/kysely-adapter" "1.6.18"
+    "@better-auth/memory-adapter" "1.6.18"
+    "@better-auth/mongo-adapter" "1.6.18"
+    "@better-auth/prisma-adapter" "1.6.18"
+    "@better-auth/telemetry" "1.6.18"
     "@better-auth/utils" "0.4.1"
-    "@better-fetch/fetch" "1.1.21"
+    "@better-fetch/fetch" "1.3.0"
     "@noble/ciphers" "^2.1.1"
     "@noble/hashes" "^2.0.1"
-    better-call "1.3.5"
+    better-call "1.3.6"
     defu "^6.1.4"
     jose "^6.1.3"
     kysely "^0.28.17 || ^0.29.0"
     nanostores "^1.1.1"
     zod "^4.3.6"
 
-better-call@1.3.5:
-  version "1.3.5"
-  resolved "https://registry.yarnpkg.com/better-call/-/better-call-1.3.5.tgz#71ea6a0d939ea030c665ea1b0ddcee06b8e423ac"
-  integrity sha512-kOFJkBP7utAQLEYrobZm3vkTH8mXq5GNgvjc5/XEST1ilVHaxXUXfeDeFlqoETMtyqS4+3/h4ONX2i++ebZrvA==
+better-call@1.3.6:
+  version "1.3.6"
+  resolved "https://registry.yarnpkg.com/better-call/-/better-call-1.3.6.tgz#3ff8c65bf369983bef5699aa8eea0fd3ac69f286"
+  integrity sha512-no1jI+h6Bkxs1NVBo4rONbVIzsPjZ8IUu7IHaJBiFwVX1XEQGN8KpHots5fSWmXe9nNyLuLIcgx6WEUcE6EDaA==
   dependencies:
     "@better-auth/utils" "^0.4.0"
     "@better-fetch/fetch" "^1.1.21"
@@ -4328,10 +4333,10 @@ node-exports-info@^1.6.0:
     object.entries "^1.1.9"
     semver "^6.3.1"
 
-nodemailer@^8.0.10:
-  version "8.0.10"
-  resolved "https://registry.yarnpkg.com/nodemailer/-/nodemailer-8.0.10.tgz#009d4deaa06f54b6bd7ddc6cac1bf78e3bcb0bf2"
-  integrity sha512-BLFuSth7QtHOkBzyqTehWWyub0NTRDuK2Q2SQfnGLsrJnzyU+Yeh4WpV1eZGuARFj1xQJHIdnTuJZLP+b9R1GQ==
+nodemailer@^8.0.11:
+  version "8.0.11"
+  resolved "https://registry.yarnpkg.com/nodemailer/-/nodemailer-8.0.11.tgz#ce46b7c2c8bbf17b0408122fbfb4e47f4bffc688"
+  integrity sha512-nrO/pDAUKl+wXX+lx16tDLbnm0fW6sK/x8mgohaCpg+CdCEl482bD4tCuAZk2DyliruiNTIZxRCoWkDqJEnAiA==
 
 object-assign@^4.1.1:
   version "4.1.1"
@@ -4650,7 +4655,12 @@ prettier-plugin-tailwindcss@0.8.0:
   resolved "https://registry.yarnpkg.com/prettier-plugin-tailwindcss/-/prettier-plugin-tailwindcss-0.8.0.tgz#766469c006717d6342cdf48eda262e8bfeabfa95"
   integrity sha512-V8ITGH87yuBDF6JpEZTOVlUz/saAwqb8f3HRgUj8Lh+tGCcrmorhsLpYqzygwFwK0PE2Ib6Mv3M7T/uE2tZV1g==
 
-prettier@3.8.3, prettier@^3.5.3:
+prettier@3.8.4:
+  version "3.8.4"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-3.8.4.tgz#f334f013ac04a96676f24dabc23c1c4ae1bae411"
+  integrity sha512-N2MylSdi48+5N/6S5j+maeHbUSIzzZ5uOcX5Hm4QpV8Dkb1HFjfAKTKX6yNPJQD9AhcT3ifHNB66tWTTJDi11Q==
+
+prettier@^3.5.3:
   version "3.8.3"
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-3.8.3.tgz#560f2de55bf01b4c0503bc629d5df99b9a1d09b0"
   integrity sha512-7igPTM53cGHMW8xWuVTydi2KO233VFiTNyF5hLJqpilHfmn8C8gPf+PS7dUT64YcXFbiMGZxS9pCSxL/Dxm/Jw==
@@ -4804,10 +4814,10 @@ react-dom@19.2.7:
   dependencies:
     scheduler "^0.27.0"
 
-react-hook-form@^7.77.0:
-  version "7.78.0"
-  resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-7.78.0.tgz#b5a7d496d9077a71f36c8f2cacd3990464af2643"
-  integrity sha512-EEZqc+N23moyzTlz61Pj+JvcXo76ICkpfOZo8JZw+sM4+wLQGh6nI2Ms+PdMOYNluFu0ghlM7B8mCzhRYtJCnA==
+react-hook-form@^7.78.0:
+  version "7.79.0"
+  resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-7.79.0.tgz#dc965ecb161e67ea91ee46f00d870ea35871b26a"
+  integrity sha512-mhYp/MTmXvzYX6AJcJVko0rktoIhhmRnEouObj4wF5i/tCttgJvnp1+9wRkpITZjDTqpo4IOSJqu0dBlPlV/Lw==
 
 react-is@^16.13.1:
   version "16.13.1"
@@ -4821,7 +4831,7 @@ react-promise-suspense@^0.3.4:
   dependencies:
     fast-deep-equal "^2.0.1"
 
-react-qr-code@^2.1.1:
+react-qr-code@^2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/react-qr-code/-/react-qr-code-2.2.0.tgz#301b5dc4d2fed503e1e313f237a7f32c1885152a"
   integrity sha512-e5nS0UUN22K3Nf8KBRUzemfdJ6OmnN5w+kbnj1lvJaol9RyVRFeGl05bCkxSN2ZegbLxjjYjX1+mmAoX9+fAhw==
