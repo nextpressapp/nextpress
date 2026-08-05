@@ -689,7 +689,7 @@
   resolved "https://registry.yarnpkg.com/@floating-ui/utils/-/utils-0.2.12.tgz#afefe785949f16ac4cdd1e695935a321572dd56a"
   integrity sha512-HpCo8tmWzLVad5s2d19EhAz5zqrrQ6s69qd6moPMQvkOuSwDT1YgRfWSVuc4ennqrgv3OHppiOGMQ7oC13yIww==
 
-"@hookform/resolvers@^5.5.7":
+"@hookform/resolvers@^5.5.8":
   version "5.7.1"
   resolved "https://registry.yarnpkg.com/@hookform/resolvers/-/resolvers-5.7.1.tgz#c2c3067066d4ac94411d4583c9522901951a2a12"
   integrity sha512-8wS/P4UDr5sQDe4nFaV51TVyfDPrWgNIXweqG0Bs9Z5LSuzKLb+RQNPvkN2oHM5SRrJyWrVH/F+LOUcFjUyvwQ==
@@ -2072,10 +2072,10 @@
   dependencies:
     "@types/node" "*"
 
-"@types/pg@8.20.2":
-  version "8.20.2"
-  resolved "https://registry.yarnpkg.com/@types/pg/-/pg-8.20.2.tgz#13d31709875afeb03b01ec951822eb38c6e81cf0"
-  integrity sha512-hCbcoph8FualKVaVJuc8aHCisaD9hcafEu/VabHbAGimByLo6DJ2+IGnWyq1egrVegU1oVJEZtXj4Nh863IxbQ==
+"@types/pg@8.20.3":
+  version "8.20.3"
+  resolved "https://registry.yarnpkg.com/@types/pg/-/pg-8.20.3.tgz#c8d02d0e680ab881171da01cd605f88c6286edc0"
+  integrity sha512-4Tvg+HO6+oQaAkpT8GTYoSExzpGGZz532GXgbbCElWJQeQdMozBWxEKNBhJJpHFjWXsMxqPbyypvj/89FWNoSQ==
   dependencies:
     "@types/node" "*"
     pg-protocol "*"
