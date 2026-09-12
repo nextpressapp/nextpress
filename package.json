@@ -75,7 +75,7 @@
     "@next/eslint-plugin-next": "15.5.25",
     "@prettier/plugin-oxc": "0.2.2",
     "@tailwindcss/postcss": "4.3.3",
-    "@types/node": "24.13.3",
+    "@types/node": "24.13.4",
     "@types/nodemailer": "7.0.12",
     "@types/pg": "8.23.1",
     "@types/react": "19.2.18",
