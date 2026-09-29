@@ -4279,7 +4279,7 @@ node-exports-info@^1.6.0:
     object.entries "^1.1.9"
     semver "^6.3.1"
 
-nodemailer@^10.0.0:
+nodemailer@^10.0.10:
   version "10.0.12"
   resolved "https://registry.yarnpkg.com/nodemailer/-/nodemailer-10.0.12.tgz#f94e46bb0f450f515cca29ba1af139fb0d83a149"
   integrity sha512-PQ46oNbNMuH/Sno7B5IWIU9etytwrO0xdTFvWXpIQFRXhBAXtzD48243AS+BCbQQTPD8y3fqUrgLn0tSo77gvg==
@@ -4756,7 +4756,7 @@ react-dom@19.3.0:
   dependencies:
     scheduler "^0.28.0"
 
-react-hook-form@^7.88.0:
+react-hook-form@^7.89.0:
   version "7.89.0"
   resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-7.89.0.tgz#16bde1ff233fef58bbbfd5cda47e6df929251e70"
   integrity sha512-vKcoCfy8RKZDrhSdqsRFp0uEOdS1AhLjOL6hR7Wmfzg1akNxEhaPf5WORx8SgEQPVXakdDyDkqQp+KNxVnnPHg==
