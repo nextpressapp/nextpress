@@ -4269,10 +4269,10 @@ node-exports-info@^1.6.0:
     object.entries "^1.1.9"
     semver "^6.3.1"
 
-nodemailer@^10.1.2:
-  version "10.1.7"
-  resolved "https://registry.yarnpkg.com/nodemailer/-/nodemailer-10.1.7.tgz#a8bcee12c75ccaaa8298ee5a8426c9bf30bb80b9"
-  integrity sha512-OQa6FDln5fLttmqSbjDiRYvFDOFNrBqfiOwHPlEbURil3b+vPB1v8xpi+Sp46drzNDlsTnNsS502vthmz56r4w==
+nodemailer@^10.1.7:
+  version "10.2.0"
+  resolved "https://registry.yarnpkg.com/nodemailer/-/nodemailer-10.2.0.tgz#92d4e0d6f951c7c529b2893eb2b855859a78dd09"
+  integrity sha512-/XyGw6kX2stMdKGUJdAQmYAeY1FscWfdRydfd2NtK3A3KDfUUXCqZzExSNAt2xhh90X2qLCR+o2Gd48YPJcJwA==
 
 object-assign@^4.1.1:
   version "4.1.1"
