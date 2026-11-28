@@ -2014,10 +2014,10 @@
   dependencies:
     undici-types "~8.9.0"
 
-"@types/node@24.19.2":
-  version "24.19.2"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-24.19.2.tgz#8718eedbc0f89648de6525be9f4a9c61cdbaa502"
-  integrity sha512-93d49wCWJkCyN87MxLpNN6KXPCwFw7bVUg79mGUV1OS40JGWwVCr8n61DXCSqz7CV6/VfPkb7xec7uP2M+QHWQ==
+"@types/node@24.19.4":
+  version "24.19.4"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-24.19.4.tgz#0e3f4b1d395738577d4d0e08f9403b00eae8f3d4"
+  integrity sha512-s04odlR3ksJrLu7QLi+pddkWLD0RmSbcP9KuWn2/ozQKAp/YgwBC/6x9kJj8yAzZnGPfxePm7zm7nysVPCRagw==
   dependencies:
     undici-types ">=7.24.0 <7.24.7"
 
@@ -2042,10 +2042,10 @@
   resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-19.3.0.tgz#90294a9266efd928a5266f2110d60d5dba5015d2"
   integrity sha512-ZI7bU42mZXXKHn/qNLEw2IrbiINU7X5+vfgdixBHkCNpYWXjKgfQ/P+uyGb5CjOLB9UcnTeg3rylQtV2hym44Q==
 
-"@types/react@19.3.1":
-  version "19.3.1"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-19.3.1.tgz#a858eaa8a6dad5f3df8bb37204e4c9decad6119c"
-  integrity sha512-HNTkBIm8zmHX8LUXX2vtZ/ONzehrV1J3abl2fUIiZ5qxTYRCj/z+rDeFwOltqCLl9lRdUTKWT41OLtYuFV/Arg==
+"@types/react@19.3.3":
+  version "19.3.3"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-19.3.3.tgz#eba04bdeb1862d66507c2b49ee23ab71d554cb04"
+  integrity sha512-K8uWpJc4teiuOPdiP1umjeA9rGMgVPiXuoL66fcS1QlwBT1WMqY8PORmub9FadopIs+RCW6siYEs7Lpq+vDlog==
   dependencies:
     csstype "^3.2.2"
 
